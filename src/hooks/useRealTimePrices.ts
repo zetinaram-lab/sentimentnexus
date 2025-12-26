@@ -4,7 +4,7 @@
  */
 
 import { useEffect, useRef, useCallback } from 'react';
-import { FreeMarketDataService } from '@/services/freeGoldPriceService';
+import RealGoldPriceService from '@/services/realGoldPriceService';
 import { useMarket } from '@/context/MarketContext';
 import { TIMING } from '@/config/constants';
 
@@ -21,7 +21,7 @@ export const useRealTimePrices = (options: UseRealTimePricesOptions = {}) => {
 
   const fetchPrice = useCallback(async () => {
     try {
-      const { price, source } = await FreeMarketDataService.getCurrentPrice();
+      const { price, source } = await RealGoldPriceService.getCurrentPrice();
       
       // Only add if price actually changed
       if (price !== lastPriceRef.current) {

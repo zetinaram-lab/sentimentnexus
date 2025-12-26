@@ -1,10 +1,10 @@
 /**
  * useRealTimePrices Hook
- * Fetches real gold prices from Finnhub API
+ * Fetches real gold prices from 100% FREE sources
  */
 
 import { useEffect, useRef, useCallback } from 'react';
-import { MarketDataService } from '@/services/marketDataService';
+import { FreeMarketDataService } from '@/services/freeGoldPriceService';
 import { useMarket } from '@/context/MarketContext';
 import { TIMING } from '@/config/constants';
 
@@ -21,22 +21,22 @@ export const useRealTimePrices = (options: UseRealTimePricesOptions = {}) => {
 
   const fetchPrice = useCallback(async () => {
     try {
-      const data = await MarketDataService.getCurrentPrice();
+      const { price, source } = await FreeMarketDataService.getCurrentPrice();
       
       // Only add if price actually changed
-      if (data.price !== lastPriceRef.current) {
-        lastPriceRef.current = data.price;
+      if (price !== lastPriceRef.current) {
+        lastPriceRef.current = price;
         
         addPricePoint({
-          timestamp: new Date(data.timestamp),
-          price: data.price,
+          timestamp: new Date(),
+          price: price,
           volume: Math.floor(Math.random() * 1000) + 500, // Mock volume for now
         });
 
         console.log('[useRealTimePrices] Updated price:', {
-          price: data.price,
-          high: data.high24h,
-          low: data.low24h,
+          price: price,
+          source: source,
+          timestamp: new Date().toLocaleTimeString(),
         });
       }
     } catch (error) {

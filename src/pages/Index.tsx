@@ -1,16 +1,40 @@
-import { MarketProvider } from '@/context/MarketContext';
+/**
+ * SentimentNexus - Main Dashboard
+ * Institutional Intelligence Terminal for XAU/USD Market Analysis
+ */
+
+import { useRef } from 'react';
+import { MarketProvider, useMarket } from '@/context/MarketContext';
 import { NewsFeed } from '@/components/NewsFeed';
 import { MarketChart } from '@/components/MarketChart';
 import { AnalyticsPanel } from '@/components/AnalyticsPanel';
 import { WhatsAppSettings } from '@/components/WhatsAppSettings';
+import { InactiveOverlay } from '@/components/InactiveOverlay';
 import { useDataStream } from '@/hooks/useDataStream';
-import { Activity, Shield } from 'lucide-react';
+import { Shield } from 'lucide-react';
 
-const Dashboard = () => {
+/**
+ * Dashboard Content - Requires MarketProvider context
+ */
+const DashboardContent = () => {
   useDataStream();
+  const { isTerminalActive } = useMarket();
+  const settingsRef = useRef<HTMLDivElement>(null);
+
+  /**
+   * Scroll to settings panel when user clicks configure
+   */
+  const handleNavigateToSettings = () => {
+    settingsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="relative min-h-screen bg-background text-foreground">
+      {/* Inactive Overlay */}
+      {!isTerminalActive && (
+        <InactiveOverlay onNavigateToSettings={handleNavigateToSettings} />
+      )}
+
       {/* Header */}
       <header className="border-b border-border px-6 py-4">
         <div className="flex items-center justify-between max-w-screen-2xl mx-auto">
@@ -29,14 +53,34 @@ const Dashboard = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-success/10 border border-success/20">
+            {/* Live Indicator */}
+            <div
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-full border ${
+                isTerminalActive
+                  ? 'bg-success/10 border-success/20'
+                  : 'bg-muted border-border'
+              }`}
+            >
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-success"></span>
+                {isTerminalActive && (
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75" />
+                )}
+                <span
+                  className={`relative inline-flex rounded-full h-2 w-2 ${
+                    isTerminalActive ? 'bg-success' : 'bg-muted-foreground'
+                  }`}
+                />
               </span>
-              <span className="text-xs font-medium text-success">LIVE</span>
+              <span
+                className={`text-xs font-medium ${
+                  isTerminalActive ? 'text-success' : 'text-muted-foreground'
+                }`}
+              >
+                {isTerminalActive ? 'LIVE' : 'STANDBY'}
+              </span>
             </div>
 
+            {/* Session Date */}
             <div className="text-right">
               <p className="text-xs text-muted-foreground">Session</p>
               <p className="text-sm font-mono text-foreground">
@@ -51,25 +95,31 @@ const Dashboard = () => {
         </div>
       </header>
 
-      {/* Main Grid */}
+      {/* Main Grid Layout */}
       <main className="p-4 max-w-screen-2xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 h-[calc(100vh-120px)]">
-          {/* Left Column - News Feed */}
+          {/* Left Column - Intelligence Feed */}
           <div className="lg:col-span-3 rounded-xl bg-card border border-border overflow-hidden">
             <NewsFeed />
           </div>
 
-          {/* Center Column - Chart */}
+          {/* Center Column - Market Chart */}
           <div className="lg:col-span-6 rounded-xl bg-card border border-border overflow-hidden">
             <MarketChart />
           </div>
 
           {/* Right Column - Analytics & Settings */}
           <div className="lg:col-span-3 flex flex-col gap-4">
+            {/* Analytics Panel */}
             <div className="flex-1 rounded-xl bg-card border border-border overflow-hidden">
               <AnalyticsPanel />
             </div>
-            <div className="h-[320px] rounded-xl bg-card border border-border overflow-hidden">
+
+            {/* WhatsApp Settings */}
+            <div
+              ref={settingsRef}
+              className="h-[360px] rounded-xl bg-card border border-border overflow-hidden"
+            >
               <WhatsAppSettings />
             </div>
           </div>
@@ -79,10 +129,13 @@ const Dashboard = () => {
   );
 };
 
+/**
+ * Index Page - Wraps dashboard with MarketProvider
+ */
 const Index = () => {
   return (
     <MarketProvider>
-      <Dashboard />
+      <DashboardContent />
     </MarketProvider>
   );
 };

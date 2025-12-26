@@ -1,11 +1,30 @@
+/**
+ * Analytics Panel Component
+ * Displays Alpha Tracker metrics, volatility indicators, and signal history
+ * Includes CSV export functionality
+ */
+
 import { useMarket } from '@/context/MarketContext';
 import { useMemo } from 'react';
-import { Clock, Zap, TrendingUp, TrendingDown, BarChart3 } from 'lucide-react';
+import {
+  Clock,
+  Zap,
+  TrendingUp,
+  TrendingDown,
+  BarChart3,
+  Download,
+  Percent,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { exportAlphaLog } from '@/lib/exportUtils';
+import { useToast } from '@/hooks/use-toast';
 
 export const AnalyticsPanel = () => {
   const { alphaSignals, events, priceData } = useMarket();
+  const { toast } = useToast();
 
+  // Calculate aggregate statistics
   const stats = useMemo(() => {
     if (alphaSignals.length === 0) {
       return {
@@ -13,7 +32,8 @@ export const AnalyticsPanel = () => {
         fastestLag: 0,
         bullishCount: 0,
         bearishCount: 0,
-        accuracy: 0,
+        avgCorrelation: 0,
+        highCorrelationCount: 0,
       };
     }
 
@@ -23,25 +43,64 @@ export const AnalyticsPanel = () => {
     const bullishCount = alphaSignals.filter((s) => s.direction === 'up').length;
     const bearishCount = alphaSignals.filter((s) => s.direction === 'down').length;
 
+    const correlations = alphaSignals
+      .filter((s) => s.correlationScore !== undefined)
+      .map((s) => s.correlationScore!);
+    const avgCorrelation =
+      correlations.length > 0
+        ? correlations.reduce((a, b) => a + b, 0) / correlations.length
+        : 0;
+    const highCorrelationCount = correlations.filter((c) => c > 80).length;
+
     return {
       avgLag,
       fastestLag,
       bullishCount,
       bearishCount,
-      accuracy: Math.round((bullishCount / alphaSignals.length) * 100),
+      avgCorrelation,
+      highCorrelationCount,
     };
   }, [alphaSignals]);
 
+  // Calculate session volatility
   const volatility = useMemo(() => {
     if (priceData.length < 2) return 0;
     const prices = priceData.map((p) => p.price);
     const mean = prices.reduce((a, b) => a + b, 0) / prices.length;
-    const variance = prices.reduce((sum, p) => sum + Math.pow(p - mean, 2), 0) / prices.length;
+    const variance =
+      prices.reduce((sum, p) => sum + Math.pow(p - mean, 2), 0) / prices.length;
     return Math.sqrt(variance);
   }, [priceData]);
 
+  // Handle CSV export
+  const handleExport = () => {
+    if (alphaSignals.length === 0) {
+      toast({
+        title: 'No Data to Export',
+        description: 'Wait for alpha signals to be detected before exporting.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    try {
+      exportAlphaLog(alphaSignals, events);
+      toast({
+        title: 'Export Complete',
+        description: `Downloaded ${alphaSignals.length} alpha signals to CSV.`,
+      });
+    } catch (error) {
+      toast({
+        title: 'Export Failed',
+        description: 'Unable to generate CSV file. Please try again.',
+        variant: 'destructive',
+      });
+    }
+  };
+
   return (
     <div className="flex flex-col h-full">
+      {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-border">
         <div className="flex items-center gap-2">
           <BarChart3 className="w-4 h-4 text-accent" />
@@ -49,10 +108,19 @@ export const AnalyticsPanel = () => {
             Alpha Tracker
           </h2>
         </div>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={handleExport}
+          className="h-7 text-xs gap-1.5"
+        >
+          <Download className="w-3 h-3" />
+          Export
+        </Button>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {/* Key Metrics */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin">
+        {/* Key Metrics Grid */}
         <div className="grid grid-cols-2 gap-3">
           <div className="p-3 rounded-lg bg-card border border-border">
             <div className="flex items-center gap-2 mb-2">
@@ -74,7 +142,7 @@ export const AnalyticsPanel = () => {
               </span>
             </div>
             <p className="text-lg font-mono font-semibold text-foreground">
-              {stats.fastestLag.toFixed(1)}s
+              {stats.fastestLag > 0 ? `${stats.fastestLag.toFixed(1)}s` : '--'}
             </p>
           </div>
 
@@ -103,18 +171,49 @@ export const AnalyticsPanel = () => {
           </div>
         </div>
 
+        {/* Correlation Metrics */}
+        <div className="p-4 rounded-lg bg-card border border-border">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <Percent className="w-3.5 h-3.5 text-accent" />
+              <span className="text-xs text-muted-foreground uppercase tracking-wide">
+                Avg Correlation
+              </span>
+            </div>
+            <span
+              className={cn(
+                'text-xs font-mono px-2 py-0.5 rounded',
+                stats.avgCorrelation > 70
+                  ? 'bg-success/20 text-success'
+                  : stats.avgCorrelation > 50
+                  ? 'bg-warning/20 text-warning'
+                  : 'bg-muted text-muted-foreground'
+              )}
+            >
+              {stats.avgCorrelation.toFixed(0)}%
+            </span>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            {stats.highCorrelationCount} high-correlation signals detected
+          </p>
+        </div>
+
         {/* Volatility Indicator */}
         <div className="p-4 rounded-lg bg-card border border-border">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs text-muted-foreground uppercase tracking-wide">
               Session Volatility
             </span>
-            <span className={cn(
-              'text-xs font-mono px-2 py-0.5 rounded',
-              volatility > 5 ? 'bg-destructive/20 text-destructive' :
-              volatility > 2 ? 'bg-warning/20 text-warning' :
-              'bg-success/20 text-success'
-            )}>
+            <span
+              className={cn(
+                'text-xs font-mono px-2 py-0.5 rounded',
+                volatility > 5
+                  ? 'bg-destructive/20 text-destructive'
+                  : volatility > 2
+                  ? 'bg-warning/20 text-warning'
+                  : 'bg-success/20 text-success'
+              )}
+            >
               {volatility > 5 ? 'HIGH' : volatility > 2 ? 'MODERATE' : 'LOW'}
             </span>
           </div>
@@ -122,9 +221,11 @@ export const AnalyticsPanel = () => {
             <div
               className={cn(
                 'h-full rounded-full transition-all duration-500',
-                volatility > 5 ? 'bg-destructive' :
-                volatility > 2 ? 'bg-warning' :
-                'bg-success'
+                volatility > 5
+                  ? 'bg-destructive'
+                  : volatility > 2
+                  ? 'bg-warning'
+                  : 'bg-success'
               )}
               style={{ width: `${Math.min(volatility * 10, 100)}%` }}
             />
@@ -149,7 +250,7 @@ export const AnalyticsPanel = () => {
             <div className="space-y-2">
               {alphaSignals.slice(0, 5).map((signal, index) => (
                 <div
-                  key={index}
+                  key={`${signal.eventId}-${index}`}
                   className="flex items-center justify-between p-3 rounded-lg bg-card/50 border border-border"
                 >
                   <div className="flex items-center gap-2">
@@ -162,9 +263,25 @@ export const AnalyticsPanel = () => {
                       {signal.eventTimestamp.toLocaleTimeString()}
                     </span>
                   </div>
-                  <span className="text-xs font-mono text-accent">
-                    +{signal.lagSeconds.toFixed(1)}s
-                  </span>
+                  <div className="flex items-center gap-2">
+                    {signal.correlationScore !== undefined && (
+                      <span
+                        className={cn(
+                          'text-xs font-mono',
+                          signal.correlationScore > 80
+                            ? 'text-success'
+                            : signal.correlationScore > 50
+                            ? 'text-warning'
+                            : 'text-muted-foreground'
+                        )}
+                      >
+                        {signal.correlationScore.toFixed(0)}%
+                      </span>
+                    )}
+                    <span className="text-xs font-mono text-accent">
+                      +{signal.lagSeconds.toFixed(1)}s
+                    </span>
+                  </div>
                 </div>
               ))}
             </div>

@@ -1,6 +1,7 @@
 /**
  * Data Stream Hook
  * Manages real-time market simulation with event-driven price reactions
+ * Only generates news events, prices are handled by useRealTimePrices when enabled
  */
 
 import { useEffect, useRef, useCallback } from 'react';
@@ -11,7 +12,7 @@ import {
   generateMarketEvent,
   calculateCorrelation,
 } from '@/lib/marketSimulation';
-import { TIMING } from '@/config/constants';
+import { TIMING, FEATURES } from '@/config/constants';
 
 // Event timing constants (in milliseconds)
 const EVENT_MIN_DELAY = 5000;

@@ -11,13 +11,18 @@ import { AnalyticsPanel } from '@/components/AnalyticsPanel';
 import { WhatsAppSettings } from '@/components/WhatsAppSettings';
 import { InactiveOverlay } from '@/components/InactiveOverlay';
 import { useDataStream } from '@/hooks/useDataStream';
+import { useRealTimePrices } from '@/hooks/useRealTimePrices';
+import { FEATURES } from '@/config/constants';
 import { Shield } from 'lucide-react';
 
 /**
  * Dashboard Content - Requires MarketProvider context
  */
 const DashboardContent = () => {
+  // Use real prices if enabled, otherwise use mock data stream
+  useRealTimePrices({ enabled: FEATURES.ENABLE_REAL_PRICES });
   useDataStream();
+  
   const { isTerminalActive } = useMarket();
   const settingsRef = useRef<HTMLDivElement>(null);
 

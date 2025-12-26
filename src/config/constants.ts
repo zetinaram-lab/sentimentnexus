@@ -71,11 +71,12 @@ export const API_CONFIG = {
  * Feature Flags
  */
 export const FEATURES = {
-  ENABLE_MOCK_DATA: true,
-  ENABLE_ANALYTICS: false,
+  ENABLE_MOCK_DATA: false, // Cambiar a false para usar datos reales
+  ENABLE_ANALYTICS: true,
   ENABLE_WHATSAPP: true,
   ENABLE_EXPORT: true,
-  ENABLE_REAL_API: false, // Toggle when ready to connect real APIs
+  ENABLE_REAL_API: true, // Activado para APIs reales
+  ENABLE_REAL_PRICES: true, // Nuevo: habilita precios reales
 } as const;
 
 /**

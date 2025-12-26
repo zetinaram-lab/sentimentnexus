@@ -1,11 +1,24 @@
 /**
  * Market Data Service
  * Handles XAU/USD price data fetching from real APIs
+ * Using Finnhub API for real-time gold prices
  */
 
 import { apiClient, ApiResponse } from './apiClient';
 import { API_CONFIG } from '@/config/constants';
 import { PricePoint } from '@/types';
+
+/**
+ * Finnhub API configuration
+ */
+const FINNHUB_CONFIG = {
+  BASE_URL: 'https://finnhub.io/api/v1',
+  API_KEY: import.meta.env.VITE_FINNHUB_API_KEY || '',
+  SYMBOLS: {
+    GOLD: 'OANDA:XAU_USD', // Gold vs USD
+  },
+  WEBSOCKET_URL: 'wss://ws.finnhub.io',
+} as const;
 
 /**
  * Market data response from API
@@ -37,17 +50,41 @@ export interface HistoricalDataParams {
  */
 export class MarketDataService {
   /**
-   * Get current market price for XAU/USD
+   * Get current market price for XAU/USD from Finnhub
    */
   static async getCurrentPrice(): Promise<MarketDataResponse> {
     try {
-      const response = await apiClient.get<MarketDataResponse>(
-        API_CONFIG.ENDPOINTS.MARKET_DATA
+      if (!FINNHUB_CONFIG.API_KEY) {
+        console.warn('[MarketDataService] No API key configured, using mock data');
+        return MockMarketDataService.getCurrentPrice();
+      }
+
+      // Fetch quote from Finnhub
+      const response = await fetch(
+        `${FINNHUB_CONFIG.BASE_URL}/quote?symbol=${FINNHUB_CONFIG.SYMBOLS.GOLD}&token=${FINNHUB_CONFIG.API_KEY}`
       );
-      return response.data;
+
+      if (!response.ok) {
+        throw new Error(`Finnhub API error: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      // Finnhub response structure: { c: current, h: high, l: low, o: open, pc: previous close, t: timestamp }
+      return {
+        symbol: 'XAUUSD',
+        price: data.c, // Current price
+        timestamp: new Date(data.t * 1000).toISOString(),
+        volume: 0, // Finnhub doesn't provide volume for forex
+        bid: data.c - 0.5,
+        ask: data.c + 0.5,
+        high24h: data.h,
+        low24h: data.l,
+      };
     } catch (error) {
       console.error('[MarketDataService] Failed to fetch current price:', error);
-      throw error;
+      // Fallback to mock data
+      return MockMarketDataService.getCurrentPrice();
     }
   }
 

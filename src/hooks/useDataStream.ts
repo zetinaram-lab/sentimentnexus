@@ -1,52 +1,116 @@
-import { useEffect, useRef } from 'react';
+/**
+ * Data Stream Hook
+ * Manages real-time market simulation with event-driven price reactions
+ */
+
+import { useEffect, useRef, useCallback } from 'react';
 import { useMarket } from '@/context/MarketContext';
 import { MarketEvent, PricePoint } from '@/types';
+import {
+  generatePriceMovement,
+  generateMarketEvent,
+  calculateCorrelation,
+} from '@/lib/marketSimulation';
 
-const NEWS_SOURCES = ['Reuters', 'Bloomberg', 'FT', 'WSJ', 'CNBC', 'ZeroHedge'];
-const RELIABILITY_LEVELS: ('high' | 'medium' | 'low')[] = ['high', 'medium', 'low'];
-const IMPACTS: ('bullish' | 'bearish' | 'neutral')[] = ['bullish', 'bearish', 'neutral'];
+// Timing constants (in milliseconds)
+const PRICE_UPDATE_INTERVAL = 2000;
+const EVENT_MIN_DELAY = 5000;
+const EVENT_MAX_DELAY = 15000;
+const EVENT_REACTION_DELAY = 2500; // 2-3 seconds after high-reliability event
 
-const MOCK_RUMORS = [
-  'Fed officials hint at potential rate pause in upcoming FOMC meeting',
-  'Chinese central bank increases gold reserves for 18th consecutive month',
-  'Geopolitical tensions escalate in Middle East, safe-haven demand rising',
-  'Major hedge fund reportedly increasing gold allocation to 15%',
-  'Dollar weakness expected as inflation data comes in softer than forecast',
-  'Central banks worldwide accelerating gold purchases amid currency concerns',
-  'Technical breakout imminent as gold tests key resistance at $2,700',
-  'ETF inflows surge to highest level since 2020 pandemic peak',
-  'Mining production disruptions reported in South Africa',
-  'Institutional investors rotating from crypto to precious metals',
-  'Swiss refiners report unprecedented demand from Asian buyers',
-  'Options market shows significant call buying for year-end expiry',
-  'Currency strategist warns of dollar devaluation risk',
-  'Gold-to-S&P ratio signals potential equity market correction',
-  'Physical gold premiums spike in Asian markets overnight',
-];
+export const useDataStream = (): void => {
+  const { addEvent, addPricePoint, addAlphaSignal, isTerminalActive } = useMarket();
 
-const generateRandomEvent = (): MarketEvent => {
-  return {
-    id: `evt-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-    timestamp: new Date(),
-    content: MOCK_RUMORS[Math.floor(Math.random() * MOCK_RUMORS.length)],
-    source: NEWS_SOURCES[Math.floor(Math.random() * NEWS_SOURCES.length)],
-    reliability: RELIABILITY_LEVELS[Math.floor(Math.random() * RELIABILITY_LEVELS.length)],
-    impact: IMPACTS[Math.floor(Math.random() * IMPACTS.length)],
-  };
-};
-
-export const useDataStream = () => {
-  const { addEvent, addPricePoint, events, calculateAlphaSignal } = useMarket();
+  // Refs to track mutable state without causing re-renders
   const priceRef = useRef(2650 + Math.random() * 50);
+  const pendingEventRef = useRef<MarketEvent | null>(null);
+  const eventReactionTimeRef = useRef<number | null>(null);
   const lastEventRef = useRef<MarketEvent | null>(null);
 
+  /**
+   * Process price update with potential event reaction
+   */
+  const processPriceUpdate = useCallback(() => {
+    const now = Date.now();
+
+    // Check if we should react to a pending high-reliability event
+    let eventToProcess: MarketEvent | null = null;
+    if (
+      pendingEventRef.current &&
+      eventReactionTimeRef.current &&
+      now >= eventReactionTimeRef.current
+    ) {
+      eventToProcess = pendingEventRef.current;
+      pendingEventRef.current = null;
+      eventReactionTimeRef.current = null;
+    }
+
+    // Generate price movement
+    const { price: newPrice, momentum } = generatePriceMovement(
+      priceRef.current,
+      eventToProcess
+    );
+    priceRef.current = newPrice;
+
+    // Create price point
+    const newPricePoint: PricePoint = {
+      timestamp: new Date(),
+      price: newPrice,
+      volume: Math.floor(Math.random() * 1000) + 500,
+      eventId: eventToProcess?.id,
+    };
+
+    addPricePoint(newPricePoint);
+
+    // Calculate alpha signal if we just reacted to an event
+    if (eventToProcess) {
+      const correlationScore = calculateCorrelation(eventToProcess, momentum);
+
+      addAlphaSignal({
+        eventId: eventToProcess.id,
+        eventTimestamp: eventToProcess.timestamp,
+        priceChangeTimestamp: new Date(),
+        lagSeconds: (now - eventToProcess.timestamp.getTime()) / 1000,
+        priceChange: momentum,
+        direction: momentum >= 0 ? 'up' : 'down',
+        correlationScore,
+      });
+
+      lastEventRef.current = null;
+    }
+  }, [addPricePoint, addAlphaSignal]);
+
+  /**
+   * Generate and dispatch a new market event
+   */
+  const dispatchEvent = useCallback(() => {
+    const event = generateMarketEvent();
+    addEvent(event);
+
+    // Queue high-reliability events for price reaction
+    if (event.reliability === 'high' || event.reliability === 'medium') {
+      pendingEventRef.current = event;
+      // Reaction delay: 2-3 seconds for high, 3-4 seconds for medium
+      const delay =
+        event.reliability === 'high'
+          ? EVENT_REACTION_DELAY + Math.random() * 500
+          : EVENT_REACTION_DELAY + 1000 + Math.random() * 1000;
+      eventReactionTimeRef.current = Date.now() + delay;
+      lastEventRef.current = event;
+    }
+  }, [addEvent]);
+
   useEffect(() => {
-    // Initial price points
+    // Don't run simulation if terminal is inactive
+    if (!isTerminalActive) return;
+
+    // Initialize with historical price points
     const now = Date.now();
     for (let i = 30; i >= 0; i--) {
-      const timestamp = new Date(now - i * 2000);
-      const price = priceRef.current + (Math.random() - 0.5) * 5;
+      const timestamp = new Date(now - i * PRICE_UPDATE_INTERVAL);
+      const { price } = generatePriceMovement(priceRef.current, null);
       priceRef.current = price;
+
       addPricePoint({
         timestamp,
         price,
@@ -54,62 +118,30 @@ export const useDataStream = () => {
       });
     }
 
-    // Price stream interval (every 2 seconds)
-    const priceInterval = setInterval(() => {
-      const momentum = lastEventRef.current
-        ? lastEventRef.current.impact === 'bullish'
-          ? 0.6
-          : lastEventRef.current.impact === 'bearish'
-          ? -0.6
-          : 0
-        : 0;
+    // Start price update interval
+    const priceInterval = setInterval(processPriceUpdate, PRICE_UPDATE_INTERVAL);
 
-      const change = (Math.random() - 0.5 + momentum) * 3;
-      priceRef.current = Math.max(2500, Math.min(2800, priceRef.current + change));
-
-      const newPricePoint: PricePoint = {
-        timestamp: new Date(),
-        price: priceRef.current,
-        volume: Math.floor(Math.random() * 1000) + 500,
-        eventId: lastEventRef.current?.id,
-      };
-
-      addPricePoint(newPricePoint);
-
-      // Calculate alpha signal if there was a recent event
-      if (lastEventRef.current) {
-        const timeSinceEvent =
-          new Date().getTime() - lastEventRef.current.timestamp.getTime();
-        if (timeSinceEvent < 10000 && timeSinceEvent > 2000) {
-          calculateAlphaSignal(lastEventRef.current, newPricePoint);
-          lastEventRef.current = null;
-        }
-      }
-    }, 2000);
-
-    // News stream interval (every 5-15 seconds)
-    const scheduleNextEvent = () => {
-      const delay = 5000 + Math.random() * 10000;
+    // Schedule event generation
+    const scheduleNextEvent = (): NodeJS.Timeout => {
+      const delay = EVENT_MIN_DELAY + Math.random() * (EVENT_MAX_DELAY - EVENT_MIN_DELAY);
       return setTimeout(() => {
-        const event = generateRandomEvent();
-        addEvent(event);
-        lastEventRef.current = event;
+        dispatchEvent();
         eventTimeoutId = scheduleNextEvent();
       }, delay);
     };
 
     let eventTimeoutId = scheduleNextEvent();
 
-    // Initial events
-    setTimeout(() => {
-      const initialEvent = generateRandomEvent();
-      addEvent(initialEvent);
-      lastEventRef.current = initialEvent;
+    // Initial event after 1 second
+    const initialEventTimeout = setTimeout(() => {
+      dispatchEvent();
     }, 1000);
 
+    // Cleanup
     return () => {
       clearInterval(priceInterval);
       clearTimeout(eventTimeoutId);
+      clearTimeout(initialEventTimeout);
     };
-  }, [addEvent, addPricePoint, calculateAlphaSignal]);
+  }, [isTerminalActive, processPriceUpdate, dispatchEvent, addPricePoint]);
 };

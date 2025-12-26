@@ -1,33 +1,89 @@
-import { useState } from 'react';
+/**
+ * WhatsApp Settings Component
+ * Configuration panel for WhatsApp API integration with validation and persistence
+ */
+
+import { useState, useEffect } from 'react';
 import { useMarket } from '@/context/MarketContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
-import { MessageSquare, Key, Link, CheckCircle, AlertCircle } from 'lucide-react';
+import {
+  MessageSquare,
+  Key,
+  Link,
+  CheckCircle,
+  AlertCircle,
+  RotateCcw,
+  Save,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 
+// Validation rules
+const VALIDATION = {
+  API_KEY_MIN_LENGTH: 20,
+  WEBHOOK_PROTOCOL: 'https://',
+} as const;
+
+interface ValidationErrors {
+  apiKey?: string;
+  webhook?: string;
+}
+
 export const WhatsAppSettings = () => {
-  const { whatsAppConfig, updateWhatsAppConfig } = useMarket();
+  const {
+    whatsAppConfig,
+    updateWhatsAppConfig,
+    saveWhatsAppConfig,
+    resetTerminal,
+  } = useMarket();
   const { toast } = useToast();
+
+  // Local form state
   const [localApiKey, setLocalApiKey] = useState(whatsAppConfig.apiKey);
   const [localWebhook, setLocalWebhook] = useState(whatsAppConfig.webhookUrl);
-  const [errors, setErrors] = useState<{ apiKey?: string; webhook?: string }>({});
+  const [errors, setErrors] = useState<ValidationErrors>({});
+  const [hasChanges, setHasChanges] = useState(false);
 
+  // Sync local state with context when it changes externally (e.g., reset)
+  useEffect(() => {
+    setLocalApiKey(whatsAppConfig.apiKey);
+    setLocalWebhook(whatsAppConfig.webhookUrl);
+    setHasChanges(false);
+  }, [whatsAppConfig.apiKey, whatsAppConfig.webhookUrl]);
+
+  // Track changes
+  useEffect(() => {
+    const changed =
+      localApiKey !== whatsAppConfig.apiKey ||
+      localWebhook !== whatsAppConfig.webhookUrl;
+    setHasChanges(changed);
+  }, [localApiKey, localWebhook, whatsAppConfig]);
+
+  /**
+   * Validate API Key
+   */
   const validateApiKey = (key: string): boolean => {
     if (!key.trim()) {
       setErrors((prev) => ({ ...prev, apiKey: 'API Key is required' }));
       return false;
     }
-    if (key.length < 20) {
-      setErrors((prev) => ({ ...prev, apiKey: 'API Key must be at least 20 characters' }));
+    if (key.length < VALIDATION.API_KEY_MIN_LENGTH) {
+      setErrors((prev) => ({
+        ...prev,
+        apiKey: `API Key must be at least ${VALIDATION.API_KEY_MIN_LENGTH} characters`,
+      }));
       return false;
     }
     setErrors((prev) => ({ ...prev, apiKey: undefined }));
     return true;
   };
 
+  /**
+   * Validate Webhook URL
+   */
   const validateWebhook = (url: string): boolean => {
     if (!url.trim()) {
       setErrors((prev) => ({ ...prev, webhook: 'Webhook URL is required' }));
@@ -35,7 +91,7 @@ export const WhatsAppSettings = () => {
     }
     try {
       new URL(url);
-      if (!url.startsWith('https://')) {
+      if (!url.startsWith(VALIDATION.WEBHOOK_PROTOCOL)) {
         setErrors((prev) => ({ ...prev, webhook: 'Webhook must use HTTPS' }));
         return false;
       }
@@ -47,6 +103,9 @@ export const WhatsAppSettings = () => {
     }
   };
 
+  /**
+   * Handle save configuration
+   */
   const handleSave = () => {
     const isApiKeyValid = validateApiKey(localApiKey);
     const isWebhookValid = validateWebhook(localWebhook);
@@ -56,13 +115,16 @@ export const WhatsAppSettings = () => {
         apiKey: localApiKey,
         webhookUrl: localWebhook,
       });
-      toast({
-        title: 'Configuration Saved',
-        description: 'WhatsApp integration settings have been updated.',
-      });
+      // Defer save to ensure state is updated
+      setTimeout(() => {
+        saveWhatsAppConfig();
+      }, 0);
     }
   };
 
+  /**
+   * Handle toggle alerts
+   */
   const handleToggle = (enabled: boolean) => {
     if (enabled && (!whatsAppConfig.apiKey || !whatsAppConfig.webhookUrl)) {
       toast({
@@ -74,15 +136,25 @@ export const WhatsAppSettings = () => {
     }
     updateWhatsAppConfig({ isEnabled: enabled });
     toast({
-      title: enabled ? 'Integration Enabled' : 'Integration Disabled',
+      title: enabled ? 'Alerts Enabled' : 'Alerts Disabled',
       description: enabled
-        ? 'WhatsApp alerts are now active.'
+        ? 'You will receive WhatsApp alerts for high-reliability signals.'
         : 'WhatsApp alerts have been disabled.',
     });
   };
 
+  /**
+   * Handle terminal reset
+   */
+  const handleReset = () => {
+    if (window.confirm('This will clear all saved data and configurations. Continue?')) {
+      resetTerminal();
+    }
+  };
+
   return (
     <div className="flex flex-col h-full">
+      {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-border">
         <div className="flex items-center gap-2">
           <MessageSquare className="w-4 h-4 text-accent" />
@@ -112,8 +184,8 @@ export const WhatsAppSettings = () => {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-6">
-        {/* API Key */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-5 scrollbar-thin">
+        {/* API Key Input */}
         <div className="space-y-2">
           <Label className="flex items-center gap-2 text-xs uppercase tracking-wide text-muted-foreground">
             <Key className="w-3.5 h-3.5" />
@@ -140,7 +212,7 @@ export const WhatsAppSettings = () => {
           )}
         </div>
 
-        {/* Webhook URL */}
+        {/* Webhook URL Input */}
         <div className="space-y-2">
           <Label className="flex items-center gap-2 text-xs uppercase tracking-wide text-muted-foreground">
             <Link className="w-3.5 h-3.5" />
@@ -168,11 +240,17 @@ export const WhatsAppSettings = () => {
         </div>
 
         {/* Save Button */}
-        <Button onClick={handleSave} className="w-full" variant="default">
+        <Button
+          onClick={handleSave}
+          className="w-full gap-2"
+          variant="default"
+          disabled={!hasChanges}
+        >
+          <Save className="w-4 h-4" />
           Save Configuration
         </Button>
 
-        {/* Toggle */}
+        {/* Alert Toggle */}
         <div className="flex items-center justify-between p-4 rounded-lg bg-card border border-border">
           <div>
             <p className="text-sm font-medium text-foreground">Enable Alerts</p>
@@ -186,15 +264,25 @@ export const WhatsAppSettings = () => {
           />
         </div>
 
-        {/* Info */}
+        {/* Info Box */}
         <div className="p-4 rounded-lg bg-accent/5 border border-accent/20">
           <p className="text-xs text-accent font-medium mb-2">Integration Info</p>
           <ul className="text-xs text-muted-foreground space-y-1">
             <li>• Alerts sent for high-reliability events only</li>
             <li>• Maximum 10 alerts per hour to prevent spam</li>
-            <li>• Webhook must respond within 5 seconds</li>
+            <li>• Settings persist across browser sessions</li>
           </ul>
         </div>
+
+        {/* Reset Terminal */}
+        <Button
+          onClick={handleReset}
+          variant="outline"
+          className="w-full gap-2 text-muted-foreground hover:text-destructive hover:border-destructive"
+        >
+          <RotateCcw className="w-4 h-4" />
+          Reset Terminal
+        </Button>
       </div>
     </div>
   );

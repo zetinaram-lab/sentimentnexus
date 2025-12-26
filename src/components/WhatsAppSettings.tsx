@@ -184,7 +184,7 @@ export const WhatsAppSettings = () => {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-5 scrollbar-thin">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {/* API Key Input */}
         <div className="space-y-2">
           <Label className="flex items-center gap-2 text-xs uppercase tracking-wide text-muted-foreground">
@@ -251,8 +251,8 @@ export const WhatsAppSettings = () => {
         </Button>
 
         {/* Alert Toggle */}
-        <div className="flex items-center justify-between p-4 rounded-lg bg-card border border-border">
-          <div>
+        <div className="flex items-center justify-between p-3 rounded-lg bg-card border border-border">
+          <div className="flex-1 min-w-0 pr-3">
             <p className="text-sm font-medium text-foreground">Enable Alerts</p>
             <p className="text-xs text-muted-foreground mt-0.5">
               Receive real-time signals via WhatsApp
@@ -265,7 +265,7 @@ export const WhatsAppSettings = () => {
         </div>
 
         {/* Info Box */}
-        <div className="p-4 rounded-lg bg-accent/5 border border-accent/20">
+        <div className="p-3 rounded-lg bg-accent/5 border border-accent/20">
           <p className="text-xs text-accent font-medium mb-2">Integration Info</p>
           <ul className="text-xs text-muted-foreground space-y-1">
             <li>• Alerts sent for high-reliability events only</li>

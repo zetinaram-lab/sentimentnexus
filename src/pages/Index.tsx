@@ -109,16 +109,16 @@ const DashboardContent = () => {
           </div>
 
           {/* Right Column - Analytics & Settings */}
-          <div className="lg:col-span-3 flex flex-col gap-4">
+          <div className="lg:col-span-3 flex flex-col gap-4 min-h-0">
             {/* Analytics Panel */}
-            <div className="flex-1 rounded-xl bg-card border border-border overflow-hidden">
+            <div className="flex-1 rounded-xl bg-card border border-border overflow-hidden min-h-0">
               <AnalyticsPanel />
             </div>
 
             {/* WhatsApp Settings */}
             <div
               ref={settingsRef}
-              className="h-[360px] rounded-xl bg-card border border-border overflow-hidden"
+              className="flex-1 min-h-[400px] max-h-[500px] rounded-xl bg-card border border-border overflow-hidden"
             >
               <WhatsAppSettings />
             </div>

@@ -4,6 +4,14 @@
  */
 
 /**
+ * Application Mode
+ */
+export const APP_MODE = {
+  REQUIRE_API_KEY: false, // Set to true in production to require WhatsApp API key
+  DEV_MODE: true, // Development mode allows terminal without configuration
+} as const;
+
+/**
  * Market Simulation Constants
  */
 export const MARKET_CONFIG = {

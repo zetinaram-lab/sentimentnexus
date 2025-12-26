@@ -19,7 +19,7 @@ import {
 } from '@/lib/storage';
 import { resetSimulation } from '@/lib/marketSimulation';
 import { useToast } from '@/hooks/use-toast';
-import { DATA_LIMITS, WHATSAPP_CONFIG } from '@/config/constants';
+import { DATA_LIMITS, WHATSAPP_CONFIG, APP_MODE } from '@/config/constants';
 
 interface MarketContextType {
   // Data State
@@ -62,8 +62,9 @@ export const MarketProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     return whatsAppStorage.get();
   });
 
-  // Derived state: terminal is active if API key is configured
-  const isTerminalActive = whatsAppConfig.apiKey.length >= WHATSAPP_CONFIG.MIN_API_KEY_LENGTH;
+  // Derived state: terminal is active if in dev mode OR API key is configured
+  const isTerminalActive = APP_MODE.DEV_MODE || 
+    (APP_MODE.REQUIRE_API_KEY && whatsAppConfig.apiKey.length >= WHATSAPP_CONFIG.MIN_API_KEY_LENGTH);
 
   // Persist alpha signals when they change
   useEffect(() => {

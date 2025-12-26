@@ -9,6 +9,8 @@ import { NewsFeed } from '@/components/NewsFeed';
 import { MarketChart } from '@/components/MarketChart';
 import { AnalyticsPanel } from '@/components/AnalyticsPanel';
 import { WhatsAppSettings } from '@/components/WhatsAppSettings';
+import { TechnicalIndicatorsPanel } from '@/components/TechnicalIndicatorsPanel';
+import { AlertsPanel } from '@/components/AlertsPanel';
 import { InactiveOverlay } from '@/components/InactiveOverlay';
 import { useDataStream } from '@/hooks/useDataStream';
 import { useRealTimePrices } from '@/hooks/useRealTimePrices';
@@ -104,8 +106,14 @@ const DashboardContent = () => {
       <main className="p-4 max-w-screen-2xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 h-[calc(100vh-120px)]">
           {/* Left Column - Intelligence Feed */}
-          <div className="lg:col-span-3 rounded-xl bg-card border border-border overflow-hidden">
-            <NewsFeed />
+          <div className="lg:col-span-3 flex flex-col gap-4 min-h-0">
+            <div className="flex-1 rounded-xl bg-card border border-border overflow-hidden">
+              <NewsFeed />
+            </div>
+            {/* Technical Indicators */}
+            <div className="rounded-xl bg-card border border-border overflow-hidden">
+              <TechnicalIndicatorsPanel />
+            </div>
           </div>
 
           {/* Center Column - Market Chart */}
@@ -118,6 +126,11 @@ const DashboardContent = () => {
             {/* Analytics Panel */}
             <div className="flex-1 rounded-xl bg-card border border-border overflow-hidden min-h-0">
               <AnalyticsPanel />
+            </div>
+
+            {/* Alerts Panel */}
+            <div className="rounded-xl bg-card border border-border overflow-hidden">
+              <AlertsPanel />
             </div>
 
             {/* WhatsApp Settings */}

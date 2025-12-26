@@ -1,0 +1,55 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background with Gradient -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  
+  <!-- Gradient Definition -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0A0F1C"/>
+      <stop offset="100%" stop-color="#1A2332"/>
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#22D3EE"/>
+      <stop offset="100%" stop-color="#06B6D4"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Grid Pattern for Tech Feel -->
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(34, 211, 238, 0.1)" stroke-width="1"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  
+  <!-- Main Title -->
+  <text x="600" y="250" font-family="Arial, sans-serif" font-size="72" font-weight="700" fill="url(#accentGradient)" text-anchor="middle">
+    SentimentNexus
+  </text>
+  
+  <!-- Subtitle -->
+  <text x="600" y="310" font-family="Arial, sans-serif" font-size="32" fill="#94A3B8" text-anchor="middle">
+    Institutional Intelligence Terminal
+  </text>
+  
+  <!-- Features -->
+  <text x="600" y="380" font-family="Arial, sans-serif" font-size="24" fill="#CBD5E1" text-anchor="middle">
+    Real-Time Gold Prices  •  Technical Indicators  •  Smart Alerts
+  </text>
+  
+  <!-- Status Badge -->
+  <rect x="520" y="420" width="160" height="40" rx="20" fill="rgba(34, 211, 238, 0.2)"/>
+  <circle cx="560" cy="440" r="6" fill="#22D3EE">
+    <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <text x="575" y="445" font-family="Arial, sans-serif" font-size="18" font-weight="600" fill="#22D3EE">
+    LIVE NOW
+  </text>
+  
+  <!-- Decorative Elements -->
+  <circle cx="150" cy="150" r="80" fill="none" stroke="#22D3EE" stroke-width="2" opacity="0.2"/>
+  <circle cx="1050" cy="480" r="100" fill="none" stroke="#22D3EE" stroke-width="2" opacity="0.2"/>
+  
+  <!-- Bottom Text -->
+  <text x="600" y="550" font-family="Arial, sans-serif" font-size="20" fill="#64748B" text-anchor="middle">
+    Free • Open Source • Professional Trading Terminal
+  </text>
+</svg>

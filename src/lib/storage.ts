@@ -1,6 +1,7 @@
 /**
  * Storage Engine for SentimentNexus
  * Handles localStorage persistence with type safety and error handling
+ * SSR-safe with runtime checks for browser environment
  */
 
 import { WhatsAppConfig, AlphaSignal } from '@/types';
@@ -10,6 +11,13 @@ const STORAGE_KEYS = {
   ALPHA_SIGNALS: 'sentinelnexus_alpha_signals',
   TERMINAL_SESSION: 'sentinelnexus_session',
 } as const;
+
+/**
+ * Check if we're running in a browser environment
+ */
+const isBrowser = (): boolean => {
+  return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
+};
 
 /**
  * Safely parse JSON from localStorage with fallback
@@ -29,6 +37,14 @@ const safeJsonParse = <T>(value: string | null, fallback: T): T => {
  */
 export const whatsAppStorage = {
   get: (): WhatsAppConfig => {
+    if (!isBrowser()) {
+      return {
+        apiKey: '',
+        webhookUrl: '',
+        isEnabled: false,
+      };
+    }
+    
     const stored = localStorage.getItem(STORAGE_KEYS.WHATSAPP_CONFIG);
     return safeJsonParse<WhatsAppConfig>(stored, {
       apiKey: '',
@@ -38,6 +54,11 @@ export const whatsAppStorage = {
   },
 
   set: (config: WhatsAppConfig): void => {
+    if (!isBrowser()) {
+      console.warn('[Storage] localStorage not available');
+      return;
+    }
+    
     try {
       localStorage.setItem(STORAGE_KEYS.WHATSAPP_CONFIG, JSON.stringify(config));
     } catch (error) {
@@ -46,6 +67,7 @@ export const whatsAppStorage = {
   },
 
   clear: (): void => {
+    if (!isBrowser()) return;
     localStorage.removeItem(STORAGE_KEYS.WHATSAPP_CONFIG);
   },
 };
@@ -56,6 +78,8 @@ export const whatsAppStorage = {
  */
 export const alphaSignalsStorage = {
   get: (): AlphaSignal[] => {
+    if (!isBrowser()) return [];
+    
     const stored = localStorage.getItem(STORAGE_KEYS.ALPHA_SIGNALS);
     const signals = safeJsonParse<AlphaSignal[]>(stored, []);
     
@@ -68,6 +92,8 @@ export const alphaSignalsStorage = {
   },
 
   set: (signals: AlphaSignal[]): void => {
+    if (!isBrowser()) return;
+    
     try {
       // Limit stored signals to prevent storage bloat
       const limitedSignals = signals.slice(0, 100);
@@ -78,6 +104,7 @@ export const alphaSignalsStorage = {
   },
 
   clear: (): void => {
+    if (!isBrowser()) return;
     localStorage.removeItem(STORAGE_KEYS.ALPHA_SIGNALS);
   },
 };
@@ -87,6 +114,11 @@ export const alphaSignalsStorage = {
  * Returns true if successful, false otherwise
  */
 export const resetTerminal = (): boolean => {
+  if (!isBrowser()) {
+    console.warn('[Storage] Cannot reset terminal - localStorage not available');
+    return false;
+  }
+  
   try {
     whatsAppStorage.clear();
     alphaSignalsStorage.clear();

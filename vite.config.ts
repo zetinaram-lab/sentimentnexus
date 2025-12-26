@@ -15,4 +15,28 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Vendor chunks for better caching
+          'react-vendor': ['react', 'react-dom'],
+          'ui-vendor': [
+            '@radix-ui/react-accordion',
+            '@radix-ui/react-alert-dialog',
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-dropdown-menu',
+            '@radix-ui/react-select',
+            '@radix-ui/react-tabs',
+            '@radix-ui/react-toast',
+            '@radix-ui/react-tooltip',
+          ],
+          'chart-vendor': ['recharts'],
+          'utils-vendor': ['clsx', 'class-variance-authority', 'date-fns'],
+        },
+      },
+    },
+    // Increase chunk size warning limit (optional, but reduces noise)
+    chunkSizeWarningLimit: 600,
+  },
 }));

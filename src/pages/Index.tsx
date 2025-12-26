@@ -21,8 +21,9 @@ import { Shield } from 'lucide-react';
  * Dashboard Content - Requires MarketProvider context
  */
 const DashboardContent = () => {
-  // Use real prices if enabled, otherwise use mock data stream
-  useRealTimePrices({ enabled: FEATURES.ENABLE_REAL_PRICES });
+  // Use ONLY real prices (never mock data)
+  useRealTimePrices({ enabled: true });
+  // useDataStream solo genera eventos de noticias, NO precios
   useDataStream();
   
   const { isTerminalActive } = useMarket();

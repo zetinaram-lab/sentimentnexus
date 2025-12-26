@@ -1,148 +1,71 @@
 /**
  * Data Stream Hook
- * Manages real-time market simulation with event-driven price reactions
- * Only generates news events, prices are handled by useRealTimePrices when enabled
+ * Generates ONLY news events (market intelligence feed)
+ * Prices are handled by useRealTimePrices hook
  */
 
 import { useEffect, useRef, useCallback } from 'react';
 import { useMarket } from '@/context/MarketContext';
-import { MarketEvent, PricePoint } from '@/types';
-import {
-  generatePriceMovement,
-  generateMarketEvent,
-  calculateCorrelation,
-} from '@/lib/marketSimulation';
-import { TIMING, FEATURES } from '@/config/constants';
+import { MarketEvent } from '@/types';
+import { generateMarketEvent } from '@/lib/marketSimulation';
 
 // Event timing constants (in milliseconds)
-const EVENT_MIN_DELAY = 5000;
-const EVENT_MAX_DELAY = 15000;
-const EVENT_REACTION_DELAY = 2500; // 2-3 seconds after high-reliability event
+const EVENT_MIN_DELAY = 5000;  // 5 seconds
+const EVENT_MAX_DELAY = 15000; // 15 seconds
 
 export const useDataStream = (): void => {
-  const { addEvent, addPricePoint, addAlphaSignal, isTerminalActive } = useMarket();
+  const { addEvent, isTerminalActive } = useMarket();
 
-  // Refs to track mutable state without causing re-renders
-  const priceRef = useRef(2650 + Math.random() * 50);
-  const pendingEventRef = useRef<MarketEvent | null>(null);
-  const eventReactionTimeRef = useRef<number | null>(null);
+  // Track last event to avoid duplicates
   const lastEventRef = useRef<MarketEvent | null>(null);
 
   /**
-   * Process price update with potential event reaction
-   */
-  const processPriceUpdate = useCallback(() => {
-    const now = Date.now();
-
-    // Check if we should react to a pending high-reliability event
-    let eventToProcess: MarketEvent | null = null;
-    if (
-      pendingEventRef.current &&
-      eventReactionTimeRef.current &&
-      now >= eventReactionTimeRef.current
-    ) {
-      eventToProcess = pendingEventRef.current;
-      pendingEventRef.current = null;
-      eventReactionTimeRef.current = null;
-    }
-
-    // Generate price movement
-    const { price: newPrice, momentum } = generatePriceMovement(
-      priceRef.current,
-      eventToProcess
-    );
-    priceRef.current = newPrice;
-
-    // Create price point
-    const newPricePoint: PricePoint = {
-      timestamp: new Date(),
-      price: newPrice,
-      volume: Math.floor(Math.random() * 1000) + 500,
-      eventId: eventToProcess?.id,
-    };
-
-    addPricePoint(newPricePoint);
-
-    // Calculate alpha signal if we just reacted to an event
-    if (eventToProcess) {
-      const correlationScore = calculateCorrelation(eventToProcess, momentum);
-
-      addAlphaSignal({
-        eventId: eventToProcess.id,
-        eventTimestamp: eventToProcess.timestamp,
-        priceChangeTimestamp: new Date(),
-        lagSeconds: (now - eventToProcess.timestamp.getTime()) / 1000,
-        priceChange: momentum,
-        direction: momentum >= 0 ? 'up' : 'down',
-        correlationScore,
-      });
-
-      lastEventRef.current = null;
-    }
-  }, [addPricePoint, addAlphaSignal]);
-
-  /**
-   * Generate and dispatch a new market event
+   * Generate and dispatch a news event
    */
   const dispatchEvent = useCallback(() => {
     const event = generateMarketEvent();
     addEvent(event);
+    lastEventRef.current = event;
 
-    // Queue high-reliability events for price reaction
-    if (event.reliability === 'high' || event.reliability === 'medium') {
-      pendingEventRef.current = event;
-      // Reaction delay: 2-3 seconds for high, 3-4 seconds for medium
-      const delay =
-        event.reliability === 'high'
-          ? EVENT_REACTION_DELAY + Math.random() * 500
-          : EVENT_REACTION_DELAY + 1000 + Math.random() * 1000;
-      eventReactionTimeRef.current = Date.now() + delay;
-      lastEventRef.current = event;
-    }
+    console.log('[useDataStream] Event generated:', {
+      impact: event.impact,
+      reliability: event.reliability,
+      timestamp: event.timestamp.toLocaleTimeString(),
+    });
   }, [addEvent]);
 
+  /**
+   * Schedule next event with random delay
+   */
+  const scheduleNextEvent = useCallback((): number => {
+    const delay = EVENT_MIN_DELAY + Math.random() * (EVENT_MAX_DELAY - EVENT_MIN_DELAY);
+    return window.setTimeout(dispatchEvent, delay);
+  }, [dispatchEvent]);
+
   useEffect(() => {
-    // Don't run simulation if terminal is inactive
-    if (!isTerminalActive) return;
-
-    // Initialize with historical price points
-    const now = Date.now();
-    for (let i = 30; i >= 0; i--) {
-      const timestamp = new Date(now - i * TIMING.DATA_STREAM_INTERVAL);
-      const { price } = generatePriceMovement(priceRef.current, null);
-      priceRef.current = price;
-
-      addPricePoint({
-        timestamp,
-        price,
-        volume: Math.floor(Math.random() * 1000) + 500,
-      });
+    if (!isTerminalActive) {
+      console.log('[useDataStream] Terminal inactive, news events paused');
+      return;
     }
 
-    // Start price update interval
-    const priceInterval = setInterval(processPriceUpdate, TIMING.DATA_STREAM_INTERVAL);
+    console.log('[useDataStream] News event stream started');
 
-    // Schedule event generation
-    const scheduleNextEvent = (): NodeJS.Timeout => {
-      const delay = EVENT_MIN_DELAY + Math.random() * (EVENT_MAX_DELAY - EVENT_MIN_DELAY);
-      return setTimeout(() => {
-        dispatchEvent();
-        eventTimeoutId = scheduleNextEvent();
-      }, delay);
-    };
+    // Generate initial event after a short delay
+    const initialTimeout = setTimeout(dispatchEvent, 2000);
 
-    let eventTimeoutId = scheduleNextEvent();
+    // Schedule recurring events
+    let nextEventTimeout = scheduleNextEvent();
 
-    // Initial event after 1 second
-    const initialEventTimeout = setTimeout(() => {
-      dispatchEvent();
-    }, 1000);
+    const eventInterval = setInterval(() => {
+      clearTimeout(nextEventTimeout);
+      nextEventTimeout = scheduleNextEvent();
+    }, EVENT_MAX_DELAY);
 
-    // Cleanup
     return () => {
-      clearInterval(priceInterval);
-      clearTimeout(eventTimeoutId);
-      clearTimeout(initialEventTimeout);
+      clearTimeout(initialTimeout);
+      clearTimeout(nextEventTimeout);
+      clearInterval(eventInterval);
+      console.log('[useDataStream] News event stream stopped');
     };
-  }, [isTerminalActive, processPriceUpdate, dispatchEvent, addPricePoint]);
+  }, [isTerminalActive, dispatchEvent, scheduleNextEvent]);
 };

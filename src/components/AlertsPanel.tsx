@@ -19,6 +19,12 @@ export const AlertsPanel: React.FC = () => {
   const [percentThreshold, setPercentThreshold] = useState<string>(
     alertConfig.percentageThreshold.toString()
   );
+  const [absoluteUp, setAbsoluteUp] = useState<string>(
+    alertConfig.absoluteChangeUp?.toString() || '15'
+  );
+  const [absoluteDown, setAbsoluteDown] = useState<string>(
+    alertConfig.absoluteChangeDown?.toString() || '13'
+  );
 
   const addPriceTarget = () => {
     const target = parseFloat(newTarget);
@@ -40,6 +46,17 @@ export const AlertsPanel: React.FC = () => {
     const value = parseFloat(percentThreshold);
     if (!isNaN(value) && value > 0) {
       updateConfig({ percentageThreshold: value });
+    }
+  };
+
+  const updateAbsoluteChanges = () => {
+    const upValue = parseFloat(absoluteUp);
+    const downValue = parseFloat(absoluteDown);
+    if (!isNaN(upValue) && upValue > 0 && !isNaN(downValue) && downValue > 0) {
+      updateConfig({ 
+        absoluteChangeUp: upValue,
+        absoluteChangeDown: downValue 
+      });
     }
   };
 
@@ -125,6 +142,48 @@ export const AlertsPanel: React.FC = () => {
           </div>
           <p className="text-[10px] text-gray-500">
             Alert when price moves by this percentage
+          </p>
+        </div>
+
+        {/* Absolute Price Change Alerts */}
+        <div className="space-y-2">
+          <Label className="text-xs text-gray-400">Absolute Price Change Alerts</Label>
+          <div className="grid grid-cols-2 gap-2">
+            <div>
+              <Label className="text-[10px] text-green-400">Up Movement</Label>
+              <div className="flex gap-1 items-center">
+                <span className="text-green-400 text-xs">+$</span>
+                <Input
+                  type="number"
+                  value={absoluteUp}
+                  onChange={(e) => setAbsoluteUp(e.target.value)}
+                  onBlur={updateAbsoluteChanges}
+                  placeholder="15"
+                  className="bg-black/40 border-green-500/30 text-white text-xs font-mono"
+                  min="0"
+                  step="1"
+                />
+              </div>
+            </div>
+            <div>
+              <Label className="text-[10px] text-red-400">Down Movement</Label>
+              <div className="flex gap-1 items-center">
+                <span className="text-red-400 text-xs">-$</span>
+                <Input
+                  type="number"
+                  value={absoluteDown}
+                  onChange={(e) => setAbsoluteDown(e.target.value)}
+                  onBlur={updateAbsoluteChanges}
+                  placeholder="13"
+                  className="bg-black/40 border-red-500/30 text-white text-xs font-mono"
+                  min="0"
+                  step="1"
+                />
+              </div>
+            </div>
+          </div>
+          <p className="text-[10px] text-gray-500">
+            Alert when price moves ±$X from base price
           </p>
         </div>
 

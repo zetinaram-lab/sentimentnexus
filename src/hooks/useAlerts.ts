@@ -11,6 +11,8 @@ import { useToast } from '@/hooks/use-toast';
 const DEFAULT_CONFIG: AlertConfig = {
   priceTargets: [4500, 4600, 4700, 4800], // Key price levels
   percentageThreshold: 2, // Alert on 2% change
+  absoluteChangeUp: 15, // Alert when price goes up $15
+  absoluteChangeDown: 13, // Alert when price goes down $13
   enableTrendAlerts: true,
   notificationEnabled: true,
 };

@@ -16,9 +16,9 @@ interface GoldPriceData {
  * Uses multiple free APIs with automatic fallback
  */
 export class RealGoldPriceService {
-  private static lastPrice: number = 2650; // Fallback price
+  private static lastPrice: number = 4560; // Fallback price (realistic)
   private static lastUpdate: number = 0;
-  private static readonly CACHE_DURATION = 10000; // 10 seconds cache
+  private static readonly CACHE_DURATION = 5000; // 5 seconds cache (más frecuente)
 
   /**
    * Get current gold price from multiple sources
@@ -35,21 +35,22 @@ export class RealGoldPriceService {
       };
     }
 
-    // Try multiple sources in order
+    // Try multiple sources in order (Binance first - most reliable)
     const sources = [
+      () => this.getFromBinance(),
       () => this.getFromMetalsAPI(),
       () => this.getFromCoinbase(),
-      () => this.getFromBinance(),
     ];
 
     for (const source of sources) {
       try {
         const data = await source();
+        console.log(`✅ Gold price from ${data.source}: $${data.price}`);
         this.lastPrice = data.price;
         this.lastUpdate = data.timestamp;
         return data;
       } catch (error) {
-        console.warn(`Source failed, trying next...`, error);
+        console.warn(`❌ Source failed, trying next...`, error);
         continue;
       }
     }

@@ -8,7 +8,7 @@ import { MarketProvider, useMarket } from '@/context/MarketContext';
 import { NewsFeed } from '@/components/NewsFeed';
 import { MarketChart } from '@/components/MarketChart';
 import { AnalyticsPanel } from '@/components/AnalyticsPanel';
-import { WhatsAppSettings } from '@/components/WhatsAppSettings';
+import { TelegramSettings } from '@/components/TelegramSettings';
 import { TechnicalIndicatorsPanel } from '@/components/TechnicalIndicatorsPanel';
 import { AlertsPanel } from '@/components/AlertsPanel';
 import { InactiveOverlay } from '@/components/InactiveOverlay';
@@ -134,12 +134,12 @@ const DashboardContent = () => {
               <AlertsPanel />
             </div>
 
-            {/* WhatsApp Settings */}
+            {/* Telegram Settings */}
             <div
               ref={settingsRef}
               className="flex-1 min-h-[400px] max-h-[500px] rounded-xl bg-card border border-border overflow-hidden"
             >
-              <WhatsAppSettings />
+              <TelegramSettings />
             </div>
           </div>
         </div>

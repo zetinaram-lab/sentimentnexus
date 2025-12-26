@@ -17,6 +17,8 @@ export interface PriceAlert {
 export interface AlertConfig {
   priceTargets: number[];
   percentageThreshold: number; // e.g., 2 for 2%
+  absoluteChangeUp: number; // e.g., 15 for $15 USD up
+  absoluteChangeDown: number; // e.g., 13 for $13 USD down
   enableTrendAlerts: boolean;
   notificationEnabled: boolean;
 }
@@ -48,6 +50,55 @@ export class AlertService {
     // Initialize if needed
     if (this.basePrice === 0) {
       this.initialize(currentPrice);
+    }
+
+    // Check absolute price changes (USD)
+    if (config.absoluteChangeUp > 0 || config.absoluteChangeDown > 0) {
+      const priceChange = currentPrice - this.basePrice;
+      
+      // Check upward movement
+      if (config.absoluteChangeUp > 0 && priceChange >= config.absoluteChangeUp) {
+        const alertId = `absolute_up_${priceChange.toFixed(2)}`;
+        
+        if (!this.triggeredAlerts.has(alertId)) {
+          alerts.push({
+            id: alertId,
+            type: 'percentage_change',
+            condition: 'change',
+            value: priceChange,
+            currentPrice,
+            triggered: true,
+            message: `🚀 Gold UP +$${priceChange.toFixed(2)}!\n\nFrom: $${this.basePrice.toFixed(2)}\nTo: $${currentPrice.toFixed(2)}\n\n📈 Movement: +${((priceChange / this.basePrice) * 100).toFixed(2)}%`,
+            timestamp: new Date(),
+          });
+          this.triggeredAlerts.add(alertId);
+          
+          // Reset base price after alert
+          this.basePrice = currentPrice;
+        }
+      }
+      
+      // Check downward movement
+      if (config.absoluteChangeDown > 0 && priceChange <= -config.absoluteChangeDown) {
+        const alertId = `absolute_down_${Math.abs(priceChange).toFixed(2)}`;
+        
+        if (!this.triggeredAlerts.has(alertId)) {
+          alerts.push({
+            id: alertId,
+            type: 'percentage_change',
+            condition: 'change',
+            value: priceChange,
+            currentPrice,
+            triggered: true,
+            message: `⚠️ Gold DOWN -$${Math.abs(priceChange).toFixed(2)}!\n\nFrom: $${this.basePrice.toFixed(2)}\nTo: $${currentPrice.toFixed(2)}\n\n📉 Movement: ${((priceChange / this.basePrice) * 100).toFixed(2)}%`,
+            timestamp: new Date(),
+          });
+          this.triggeredAlerts.add(alertId);
+          
+          // Reset base price after alert
+          this.basePrice = currentPrice;
+        }
+      }
     }
 
     // Check percentage changes

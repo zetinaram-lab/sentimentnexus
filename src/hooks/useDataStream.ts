@@ -11,9 +11,9 @@ import {
   generateMarketEvent,
   calculateCorrelation,
 } from '@/lib/marketSimulation';
+import { TIMING } from '@/config/constants';
 
-// Timing constants (in milliseconds)
-const PRICE_UPDATE_INTERVAL = 2000;
+// Event timing constants (in milliseconds)
 const EVENT_MIN_DELAY = 5000;
 const EVENT_MAX_DELAY = 15000;
 const EVENT_REACTION_DELAY = 2500; // 2-3 seconds after high-reliability event
@@ -107,7 +107,7 @@ export const useDataStream = (): void => {
     // Initialize with historical price points
     const now = Date.now();
     for (let i = 30; i >= 0; i--) {
-      const timestamp = new Date(now - i * PRICE_UPDATE_INTERVAL);
+      const timestamp = new Date(now - i * TIMING.DATA_STREAM_INTERVAL);
       const { price } = generatePriceMovement(priceRef.current, null);
       priceRef.current = price;
 
@@ -119,7 +119,7 @@ export const useDataStream = (): void => {
     }
 
     // Start price update interval
-    const priceInterval = setInterval(processPriceUpdate, PRICE_UPDATE_INTERVAL);
+    const priceInterval = setInterval(processPriceUpdate, TIMING.DATA_STREAM_INTERVAL);
 
     // Schedule event generation
     const scheduleNextEvent = (): NodeJS.Timeout => {

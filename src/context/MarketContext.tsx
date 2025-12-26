@@ -19,6 +19,7 @@ import {
 } from '@/lib/storage';
 import { resetSimulation } from '@/lib/marketSimulation';
 import { useToast } from '@/hooks/use-toast';
+import { DATA_LIMITS, WHATSAPP_CONFIG } from '@/config/constants';
 
 interface MarketContextType {
   // Data State
@@ -62,7 +63,7 @@ export const MarketProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   });
 
   // Derived state: terminal is active if API key is configured
-  const isTerminalActive = whatsAppConfig.apiKey.length >= 20;
+  const isTerminalActive = whatsAppConfig.apiKey.length >= WHATSAPP_CONFIG.MIN_API_KEY_LENGTH;
 
   // Persist alpha signals when they change
   useEffect(() => {
@@ -73,12 +74,12 @@ export const MarketProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
   // Add new market event
   const addEvent = useCallback((event: MarketEvent) => {
-    setEvents((prev) => [event, ...prev].slice(0, 50));
+    setEvents((prev) => [event, ...prev].slice(0, DATA_LIMITS.MAX_EVENTS));
   }, []);
 
   // Add new price point
   const addPricePoint = useCallback((point: PricePoint) => {
-    setPriceData((prev) => [...prev, point].slice(-100));
+    setPriceData((prev) => [...prev, point].slice(-DATA_LIMITS.MAX_PRICE_POINTS));
   }, []);
 
   // Select/deselect event for chart highlighting

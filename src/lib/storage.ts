@@ -5,12 +5,7 @@
  */
 
 import { WhatsAppConfig, AlphaSignal } from '@/types';
-
-const STORAGE_KEYS = {
-  WHATSAPP_CONFIG: 'sentinelnexus_whatsapp_config',
-  ALPHA_SIGNALS: 'sentinelnexus_alpha_signals',
-  TERMINAL_SESSION: 'sentinelnexus_session',
-} as const;
+import { STORAGE_KEYS, DATA_LIMITS } from '@/config/constants';
 
 /**
  * Check if we're running in a browser environment
@@ -96,7 +91,7 @@ export const alphaSignalsStorage = {
     
     try {
       // Limit stored signals to prevent storage bloat
-      const limitedSignals = signals.slice(0, 100);
+      const limitedSignals = signals.slice(0, DATA_LIMITS.MAX_STORED_SIGNALS);
       localStorage.setItem(STORAGE_KEYS.ALPHA_SIGNALS, JSON.stringify(limitedSignals));
     } catch (error) {
       console.error('[Storage] Failed to save alpha signals:', error);

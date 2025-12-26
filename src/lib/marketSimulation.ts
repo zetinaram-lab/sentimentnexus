@@ -5,13 +5,7 @@
  */
 
 import { MarketEvent, PricePoint } from '@/types';
-
-// Simulation Constants
-const PRICE_BOUNDS = { min: 2500, max: 2800 } as const;
-const BASE_VOLATILITY = 1.5;
-const TREND_MOMENTUM = 0.7;
-const EVENT_IMPACT_MULTIPLIER = 2.5;
-const HIGH_RELIABILITY_BONUS = 1.5;
+import { MARKET_CONFIG } from '@/config/constants';
 
 // News Sources with credibility weights
 export const NEWS_SOURCES = [
@@ -78,8 +72,8 @@ const calculateTrendShift = (): TrendState => {
   currentTrend.duration++;
 
   // Trends naturally decay over time
-  if (currentTrend.duration > 10) {
-    const shiftProbability = (currentTrend.duration - 10) * 0.05;
+  if (currentTrend.duration > MARKET_CONFIG.MAX_TREND_DURATION) {
+    const shiftProbability = (currentTrend.duration - MARKET_CONFIG.MAX_TREND_DURATION) * MARKET_CONFIG.TREND_SHIFT_BASE_PROBABILITY;
     if (Math.random() < shiftProbability) {
       const directions: TrendState['direction'][] = ['bullish', 'bearish', 'neutral'];
       return {
@@ -103,18 +97,18 @@ export const generatePriceMovement = (
   currentTrend = calculateTrendShift();
 
   // Base random movement
-  let movement = (Math.random() - 0.5) * BASE_VOLATILITY * 2;
+  let movement = (Math.random() - 0.5) * MARKET_CONFIG.BASE_VOLATILITY * 2;
 
   // Apply trend momentum
   if (currentTrend.direction === 'bullish') {
-    movement += TREND_MOMENTUM * currentTrend.strength;
+    movement += MARKET_CONFIG.TREND_MOMENTUM * currentTrend.strength;
   } else if (currentTrend.direction === 'bearish') {
-    movement -= TREND_MOMENTUM * currentTrend.strength;
+    movement -= MARKET_CONFIG.TREND_MOMENTUM * currentTrend.strength;
   }
 
   // Apply event impact if pending high-reliability event
   if (pendingEvent && pendingEvent.reliability === 'high') {
-    const impactMultiplier = EVENT_IMPACT_MULTIPLIER * HIGH_RELIABILITY_BONUS;
+    const impactMultiplier = MARKET_CONFIG.EVENT_IMPACT_MULTIPLIER * MARKET_CONFIG.HIGH_RELIABILITY_BONUS;
     if (pendingEvent.impact === 'bullish') {
       movement += impactMultiplier;
       currentTrend = { direction: 'bullish', strength: 0.8, duration: 0 };
@@ -123,7 +117,7 @@ export const generatePriceMovement = (
       currentTrend = { direction: 'bearish', strength: 0.8, duration: 0 };
     }
   } else if (pendingEvent && pendingEvent.reliability === 'medium') {
-    const impactMultiplier = EVENT_IMPACT_MULTIPLIER * 0.6;
+    const impactMultiplier = MARKET_CONFIG.EVENT_IMPACT_MULTIPLIER * 0.6;
     if (pendingEvent.impact === 'bullish') {
       movement += impactMultiplier;
     } else if (pendingEvent.impact === 'bearish') {
@@ -133,11 +127,11 @@ export const generatePriceMovement = (
 
   // Enforce price bounds with soft bounce
   let newPrice = currentPrice + movement;
-  if (newPrice < PRICE_BOUNDS.min) {
-    newPrice = PRICE_BOUNDS.min + Math.random() * 5;
+  if (newPrice < MARKET_CONFIG.PRICE_BOUNDS.min) {
+    newPrice = MARKET_CONFIG.PRICE_BOUNDS.min + Math.random() * 5;
     currentTrend.direction = 'bullish';
-  } else if (newPrice > PRICE_BOUNDS.max) {
-    newPrice = PRICE_BOUNDS.max - Math.random() * 5;
+  } else if (newPrice > MARKET_CONFIG.PRICE_BOUNDS.max) {
+    newPrice = MARKET_CONFIG.PRICE_BOUNDS.max - Math.random() * 5;
     currentTrend.direction = 'bearish';
   }
 

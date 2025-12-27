@@ -53,7 +53,27 @@ export const MarketProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
   // Initialize state from localStorage
   const [events, setEvents] = useState<MarketEvent[]>([]);
-  const [priceData, setPriceData] = useState<PricePoint[]>([]);
+  const [priceData, setPriceData] = useState<PricePoint[]>(() => {
+    // Initialize with historical data (last 2 hours, 1 point per minute = 120 points)
+    const now = new Date();
+    const basePrice = 4560; // Starting price
+    const points: PricePoint[] = [];
+    
+    for (let i = 120; i > 0; i--) {
+      const timestamp = new Date(now.getTime() - i * 60 * 1000); // 1 minute intervals
+      // Add small random variation (±0.5%) to simulate realistic price movement
+      const variation = (Math.random() - 0.5) * 2 * (basePrice * 0.005);
+      const price = basePrice + variation;
+      
+      points.push({
+        timestamp,
+        price: Math.round(price * 100) / 100, // Round to 2 decimals
+        volume: Math.floor(Math.random() * 1000) + 500,
+      });
+    }
+    
+    return points;
+  });
   const [alphaSignals, setAlphaSignals] = useState<AlphaSignal[]>(() => {
     return alphaSignalsStorage.get();
   });

@@ -1,9 +1,11 @@
 /**
  * Setup Telegram Bot Webhook
  * Configures the bot to receive commands
+ * 
+ * Usage: Set BOT_TOKEN in your environment or replace below
  */
 
-const BOT_TOKEN = '8201828020:AAGnLbxyiBvgi42Dq-9SIJvKyWOHzAUaEGY';
+const BOT_TOKEN = process.env.VITE_TELEGRAM_BOT_TOKEN || 'YOUR_BOT_TOKEN_HERE';
 const WEBHOOK_URL = 'https://sentimentnexus.vercel.app/api/telegram-webhook';
 
 async function setupWebhook() {
@@ -35,11 +37,12 @@ async function setupWebhook() {
       
       // Send test message
       console.log('\n📤 Enviando mensaje de prueba...');
+      const chatId = process.env.VITE_TELEGRAM_CHAT_ID || 'YOUR_CHAT_ID_HERE';
       const testResponse = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          chat_id: '8080682598',
+          chat_id: chatId,
           text: `
 🤖 *Bot Configurado Correctamente!*
 

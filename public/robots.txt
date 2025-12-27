@@ -1,8 +1,13 @@
+# SentimentNexus Robots.txt
+# Updated: 2025-12-26
+
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 0
 
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 0
 
 User-agent: Twitterbot
 Allow: /
@@ -12,3 +17,9 @@ Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /api/telegram-webhook
+Disallow: /api/send-telegram
+
+# Sitemap
+Sitemap: https://sentimentnexus.vercel.app/sitemap.xml
+

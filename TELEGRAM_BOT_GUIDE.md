@@ -149,23 +149,23 @@ Updates: ["message"]
 
 ### Variables de Entorno (Vercel)
 ```bash
-VITE_TELEGRAM_BOT_TOKEN=8201828020:AAGnLbxyiBvgi42Dq-9SIJvKyWOHzAUaEGY
-VITE_TELEGRAM_CHAT_ID=8080682598
+VITE_TELEGRAM_BOT_TOKEN=your_bot_token_here
+VITE_TELEGRAM_CHAT_ID=your_chat_id_here
 ```
 
 ### Verificar Webhook
 ```bash
-curl https://api.telegram.org/bot8201828020:AAGnLbxyiBvgi42Dq-9SIJvKyWOHzAUaEGY/getWebhookInfo
+curl https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getWebhookInfo
 ```
 
 ### Eliminar Webhook (si necesitas)
 ```bash
-curl -X POST https://api.telegram.org/bot8201828020:AAGnLbxyiBvgi42Dq-9SIJvKyWOHzAUaEGY/deleteWebhook
+curl -X POST https://api.telegram.org/bot<YOUR_BOT_TOKEN>/deleteWebhook
 ```
 
 ### Establecer Webhook
 ```bash
-curl -X POST 'https://api.telegram.org/bot8201828020:AAGnLbxyiBvgi42Dq-9SIJvKyWOHzAUaEGY/setWebhook' \
+curl -X POST 'https://api.telegram.org/bot<YOUR_BOT_TOKEN>/setWebhook' \
   -H 'Content-Type: application/json' \
   -d '{"url":"https://sentimentnexus.vercel.app/api/telegram-webhook"}'
 ```

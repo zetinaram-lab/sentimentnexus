@@ -12,6 +12,8 @@ import { TelegramSettings } from '@/components/TelegramSettings';
 import { TechnicalIndicatorsPanel } from '@/components/TechnicalIndicatorsPanel';
 import { AlertsPanel } from '@/components/AlertsPanel';
 import { InactiveOverlay } from '@/components/InactiveOverlay';
+import { Footer } from '@/components/Footer';
+import { SocialProof } from '@/components/SocialProof';
 import { useDataStream } from '@/hooks/useDataStream';
 import { useRealTimePrices } from '@/hooks/useRealTimePrices';
 import { FEATURES } from '@/config/constants';
@@ -103,6 +105,9 @@ const DashboardContent = () => {
         </div>
       </header>
 
+      {/* Social Proof Bar */}
+      <SocialProof />
+
       {/* Main Grid Layout */}
       <main className="p-4 max-w-screen-2xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 h-[calc(100vh-120px)]">
@@ -118,8 +123,13 @@ const DashboardContent = () => {
           </div>
 
           {/* Center Column - Market Chart */}
-          <div className="lg:col-span-6 rounded-xl bg-card border border-border overflow-hidden">
-            <MarketChart />
+          <div className="lg:col-span-6 flex flex-col gap-4">
+            {/* Removed Sponsored Banner - Community first approach */}
+            {/* <SponsoredBanner compact /> */}
+            
+            <div className="flex-1 rounded-xl bg-card border border-border overflow-hidden">
+              <MarketChart />
+            </div>
           </div>
 
           {/* Right Column - Analytics & Settings */}
@@ -137,12 +147,15 @@ const DashboardContent = () => {
             {/* Telegram Settings */}
             <div
               ref={settingsRef}
-              className="flex-1 min-h-[400px] max-h-[500px] rounded-xl bg-card border border-border overflow-hidden"
+              className="rounded-xl bg-card border border-border overflow-hidden"
             >
               <TelegramSettings />
             </div>
           </div>
         </div>
+
+        {/* Footer - Community info and creator links */}
+        <Footer />
       </main>
     </div>
   );

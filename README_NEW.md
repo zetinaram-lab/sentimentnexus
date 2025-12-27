@@ -297,22 +297,9 @@ MIT License - ver [LICENSE](LICENSE) para más detalles
 ## 👨‍💻 Autor
 
 **Tu Nombre**
-- Portfolio: [ramseszetina.dev](https://www.linkedin.com/in/ramseszetina)
-- GitHub: [@zetinaram-lab](https://github.com/zetinaram-lab)
-- LinkedIn: [Ramses Zetina](https://linkedin.com/in/ramseszetina)
-
----
-
-## 🔐 Seguridad
-
-Este proyecto maneja información sensible como tokens de Telegram. Sigue estas mejores prácticas:
-
-- ✅ Usa `.env` para variables locales (ya está en `.gitignore`)
-- ✅ Usa variables de entorno en Vercel para producción
-- ❌ NUNCA comitees tokens o API keys en el código
-- 📖 Lee [SECURITY.md](./SECURITY.md) para más información
-
-**Si encuentras un problema de seguridad**, por favor repórtalo de forma privada al desarrollador.
+- Portfolio: [tu-portfolio.com](https://tu-portfolio.com)
+- GitHub: [@tu-usuario](https://github.com/tu-usuario)
+- LinkedIn: [tu-linkedin](https://linkedin.com/in/tu-perfil)
 
 ---
 

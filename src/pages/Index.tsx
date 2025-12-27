@@ -19,11 +19,14 @@ import { useDataStream } from '@/hooks/useDataStream';
 import { useRealTimePrices } from '@/hooks/useRealTimePrices';
 import { FEATURES } from '@/config/constants';
 import { Shield } from 'lucide-react';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Dashboard Content - Requires MarketProvider context
  */
 const DashboardContent = () => {
+  const { t } = useTranslation();
   // Use ONLY real prices (never mock data)
   useRealTimePrices({ enabled: true });
   // useDataStream solo genera eventos de noticias, NO precios
@@ -55,15 +58,18 @@ const DashboardContent = () => {
             </div>
             <div>
               <h1 className="text-lg font-semibold tracking-tight text-foreground">
-                SentimentNexus
+                {t('header.title')}
               </h1>
               <p className="text-xs text-muted-foreground">
-                Institutional Intelligence Terminal
+                {t('header.subtitle')}
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-4">
+            {/* Language Switcher */}
+            <LanguageSwitcher />
+            
             {/* Live Indicator */}
             <div
               className={`flex items-center gap-2 px-3 py-1.5 rounded-full border ${

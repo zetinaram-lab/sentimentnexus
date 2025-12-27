@@ -1,0 +1,106 @@
+{
+  "header": {
+    "title": "SentimentNexus",
+    "subtitle": "Real-Time Crypto Sentiment Analysis"
+  },
+  "hero": {
+    "title": "Sentiment Analysis",
+    "subtitle": "Real-Time Crypto",
+    "description": "Detect market trends before others. Real-time sentiment analysis to make informed decisions.",
+    "cta": "Start Analysis",
+    "telegram": "Go to Telegram Bot"
+  },
+  "marketOverview": {
+    "title": "Market Overview",
+    "bullish": "Bullish",
+    "bearish": "Bearish",
+    "neutral": "Neutral",
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low",
+    "sentiment": "Sentiment",
+    "volatility": "Volatility",
+    "confidence": "Confidence"
+  },
+  "analytics": {
+    "title": "Detailed Analysis",
+    "sentiment": "Sentiment",
+    "volatility": "Volatility",
+    "confidence": "Confidence",
+    "trend": "Trend",
+    "volume": "Volume",
+    "social": "Social",
+    "bullish": "Bullish",
+    "bearish": "Bearish",
+    "neutral": "Neutral",
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low"
+  },
+  "news": {
+    "title": "Recent News",
+    "source": "Source",
+    "impact": "Impact",
+    "positive": "Positive",
+    "negative": "Negative",
+    "neutral": "Neutral",
+    "minutesAgo": "{{minutes}}m ago",
+    "hoursAgo": "{{hours}}h ago"
+  },
+  "footer": {
+    "madeWith": "Made with",
+    "by": "by",
+    "donate": "Donate",
+    "builtWithAI": "Built with AI assistance",
+    "learnMore": "Learn more"
+  },
+  "donation": {
+    "title": "Like SentimentNexus?",
+    "description": "Support development with a donation",
+    "button": "Donate with PayPal"
+  },
+  "whatsapp": {
+    "title": "WhatsApp Settings",
+    "description": "Connect your WhatsApp account to receive alerts",
+    "connectButton": "Connect WhatsApp",
+    "disconnectButton": "Disconnect",
+    "phoneLabel": "Phone number",
+    "alertsTitle": "Active alerts",
+    "alertType": "Alert type",
+    "threshold": "Threshold",
+    "enabled": "Active",
+    "disabled": "Inactive",
+    "priceAlert": "Price alert",
+    "sentimentAlert": "Sentiment alert",
+    "newsAlert": "News alert"
+  },
+  "chart": {
+    "title": "Sentiment Trend",
+    "time": "Time",
+    "score": "Score"
+  },
+  "telegram": {
+    "title": "Telegram Bot",
+    "description": "Receive sentiment analysis directly on Telegram",
+    "features": {
+      "realtime": "Real-time analysis",
+      "alerts": "Custom alerts",
+      "free": "Free forever"
+    },
+    "cta": "Open in Telegram"
+  },
+  "language": {
+    "select": "Language",
+    "spanish": "Español",
+    "english": "English"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error loading data",
+    "retry": "Retry",
+    "viewMore": "View more",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel"
+  }
+}

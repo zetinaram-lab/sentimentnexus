@@ -1,0 +1,106 @@
+{
+  "header": {
+    "title": "SentimentNexus",
+    "subtitle": "Análisis de Sentimiento Cripto en Tiempo Real"
+  },
+  "hero": {
+    "title": "Análisis de Sentimiento",
+    "subtitle": "Cripto en Tiempo Real",
+    "description": "Detecta tendencias del mercado antes que los demás. Análisis de sentimiento en tiempo real para tomar decisiones informadas.",
+    "cta": "Iniciar Análisis",
+    "telegram": "Ir al Bot de Telegram"
+  },
+  "marketOverview": {
+    "title": "Panorama del Mercado",
+    "bullish": "Alcista",
+    "bearish": "Bajista",
+    "neutral": "Neutral",
+    "high": "Alto",
+    "medium": "Medio",
+    "low": "Bajo",
+    "sentiment": "Sentimiento",
+    "volatility": "Volatilidad",
+    "confidence": "Confianza"
+  },
+  "analytics": {
+    "title": "Análisis Detallado",
+    "sentiment": "Sentimiento",
+    "volatility": "Volatilidad",
+    "confidence": "Confianza",
+    "trend": "Tendencia",
+    "volume": "Volumen",
+    "social": "Social",
+    "bullish": "Alcista",
+    "bearish": "Bajista",
+    "neutral": "Neutral",
+    "high": "Alto",
+    "medium": "Medio",
+    "low": "Bajo"
+  },
+  "news": {
+    "title": "Noticias Recientes",
+    "source": "Fuente",
+    "impact": "Impacto",
+    "positive": "Positivo",
+    "negative": "Negativo",
+    "neutral": "Neutral",
+    "minutesAgo": "hace {{minutes}} min",
+    "hoursAgo": "hace {{hours}}h"
+  },
+  "footer": {
+    "madeWith": "Hecho con",
+    "by": "por",
+    "donate": "Donar",
+    "builtWithAI": "Creado con asistencia de IA",
+    "learnMore": "Saber más"
+  },
+  "donation": {
+    "title": "¿Te gusta SentimentNexus?",
+    "description": "Apoya el desarrollo con una donación",
+    "button": "Donar con PayPal"
+  },
+  "whatsapp": {
+    "title": "Configuración de WhatsApp",
+    "description": "Conecta tu cuenta de WhatsApp para recibir alertas",
+    "connectButton": "Conectar WhatsApp",
+    "disconnectButton": "Desconectar",
+    "phoneLabel": "Número de teléfono",
+    "alertsTitle": "Alertas activas",
+    "alertType": "Tipo de alerta",
+    "threshold": "Umbral",
+    "enabled": "Activa",
+    "disabled": "Inactiva",
+    "priceAlert": "Alerta de precio",
+    "sentimentAlert": "Alerta de sentimiento",
+    "newsAlert": "Alerta de noticias"
+  },
+  "chart": {
+    "title": "Tendencia de Sentimiento",
+    "time": "Tiempo",
+    "score": "Puntuación"
+  },
+  "telegram": {
+    "title": "Bot de Telegram",
+    "description": "Recibe análisis de sentimiento directamente en Telegram",
+    "features": {
+      "realtime": "Análisis en tiempo real",
+      "alerts": "Alertas personalizadas",
+      "free": "Gratis para siempre"
+    },
+    "cta": "Abrir en Telegram"
+  },
+  "language": {
+    "select": "Idioma",
+    "spanish": "Español",
+    "english": "English"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error al cargar datos",
+    "retry": "Reintentar",
+    "viewMore": "Ver más",
+    "close": "Cerrar",
+    "save": "Guardar",
+    "cancel": "Cancelar"
+  }
+}

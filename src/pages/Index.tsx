@@ -14,6 +14,7 @@ import { AlertsPanel } from '@/components/AlertsPanel';
 import { InactiveOverlay } from '@/components/InactiveOverlay';
 import { Footer } from '@/components/Footer';
 import { SocialProof } from '@/components/SocialProof';
+import { DonationButton } from '@/components/DonationButton';
 import { useDataStream } from '@/hooks/useDataStream';
 import { useRealTimePrices } from '@/hooks/useRealTimePrices';
 import { FEATURES } from '@/config/constants';
@@ -120,6 +121,8 @@ const DashboardContent = () => {
             <div className="rounded-xl bg-card border border-border overflow-hidden">
               <TechnicalIndicatorsPanel />
             </div>
+            {/* Donation Button - Optional support */}
+            <DonationButton />
           </div>
 
           {/* Center Column - Market Chart */}

@@ -1,0 +1,105 @@
+Create a professional contract review SaaS application called "ContractGuard" for freelancers.
+
+CORE FEATURES:
+1. Landing page with hero section explaining the service
+2. Contract upload interface (drag & drop PDF/DOCX, max 10MB)
+3. Real-time analysis progress indicator
+4. Results dashboard showing:
+   - Overall risk score (0-100 scale with color coding using weighted formula)
+   - Red flags detection (list with severity levels + clickable to highlight recommendations)
+   - Key clauses analysis (payment terms, IP rights, termination, liability)
+   - Alternative clause suggestions (copy-paste ready)
+   - Recommendations section with actionable advice
+5. Pricing page ($5 per review, with bundle discounts and subscription option)
+6. User authentication (email + Google OAuth)
+7. Payment integration (Stripe checkout)
+8. User dashboard with contract history and analysis archive
+9. Export analysis to PDF (1-page summary)
+10. Multi-language support (detect Spanish/English contracts)
+
+TECH STACK:
+- Frontend: React + TypeScript + Vite
+- Styling: Tailwind CSS + shadcn/ui components
+- Database: Supabase (for user data, contract history, analysis results)
+- State: React Context + Zustand for complex state
+- Forms: React Hook Form + Zod validation
+- Icons: Lucide React
+- File upload: react-dropzone
+- PDF display: react-pdf
+- Charts: Recharts for risk visualization
+- Authentication: Supabase Auth
+
+DESIGN REQUIREMENTS:
+- Modern, professional, trustworthy aesthetic (Fintech-inspired like Stripe/Mercury)
+- Bento Grid layout for Analysis Dashboard
+- Dark mode support
+- Responsive (mobile-first)
+- Color scheme: Blue (#2563eb) primary, Red (#dc2626) for high risk, Amber (#f59e0b) for medium, Green (#16a34a) for safe
+- Use shadcn/ui components: Button, Card, Badge, Alert, Progress, Tabs, Dialog, Accordion
+- Smooth animations and transitions
+- Professional legal/business feel but modern
+
+TRUST & SECURITY UI ELEMENTS:
+- "Encrypted" badge on upload section
+- "Privacy Verified" badge
+- Persistent legal disclaimer footer: "Not legal advice. AI-generated analysis for informational purposes only."
+- "Your contracts are never used to train AI models" message
+- "End-to-end encryption" indicator
+
+KEY PAGES STRUCTURE:
+1. / (landing page with features, how it works, testimonials, trust signals, CTA)
+2. /upload (contract upload interface with security badges)
+3. /analysis/[id] (analysis results page with Bento Grid layout)
+4. /pricing (pricing tiers with per-review and subscription options)
+5. /dashboard (user's contract history with filters and search)
+6. /auth (login/signup with Google OAuth prominently displayed)
+
+RISK SCORE CALCULATION:
+Use weighted formula: Score = 100 - (RedFlags × 15) - (YellowFlags × 5)
+Display score with appropriate color coding and explanation
+
+INTERACTIVE FEATURES:
+- Clicking a "Red Flag" highlights the specific recommendation
+- Hover over risk score shows calculation breakdown
+- Export button generates clean 1-page PDF summary
+- Copy button for alternative clause suggestions
+
+IMPORTANT:
+- Use Supabase for data persistence (NOT localStorage for production data)
+- Include comprehensive TypeScript types
+- Add proper error handling and loading states
+- Make file upload robust with validation
+- Create reusable components
+- Add proper routing with React Router
+- Include a professional footer with legal disclaimer
+- Add a simple navbar with logo and navigation
+- Make it production-ready UI (we'll add real AI backend later)
+- Ensure mobile experience is excellent (many freelancers work on phones)
+
+MOCK ANALYSIS RESULT (for testing):
+- Risk Score: 67/100 (Medium Risk - calculated as 100 - (2 red × 15) - (1 yellow × 5))
+- Red Flags (High Risk): 
+  * "Unlimited liability clause detected" → Recommendation: "Request liability cap of 2x project value"
+    Alternative Clause: "Contractor's liability shall not exceed twice the total project fee"
+  * "No payment timeline specified" → Recommendation: "Add milestone-based payment schedule"
+    Alternative Clause: "Payment in 3 installments: 30% upfront, 40% at midpoint, 30% upon completion"
+- Yellow Flags (Medium Risk):
+  * "IP rights transfer unclear" → Recommendation: "Specify that IP transfers only after final payment"
+    Alternative Clause: "All intellectual property rights transfer to Client upon receipt of final payment"
+- Safe Clauses (Low Risk):
+  * "Standard termination notice (30 days)"
+  * "Confidentiality agreement included"
+  * "Dispute resolution through arbitration"
+- Recommendations Summary:
+  1. "Request specific payment milestones with dates"
+  2. "Add liability cap clause (industry standard: 2x project value)"
+  3. "Clarify IP ownership timeline in writing"
+  4. "Consider adding a 'kill fee' for early termination"
+
+ADDITIONAL REFINEMENTS:
+- Language Detection: Auto-detect contract language (Spanish/English)
+- Contract Templates Library: Show 3 "Safe Contract Templates" on dashboard
+- Comparison Feature: "Compare this contract with industry standard" (mock for now)
+- Email Digest: Option to receive analysis via email
+- Dark Pattern Warning: Flag any manipulative contract language
+- Freelancer-Specific Checks: Focus on payment terms, scope creep protection, revision limits

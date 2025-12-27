@@ -1,0 +1,67 @@
+Create a professional contract review SaaS application called "ContractGuard" for freelancers.
+
+CORE FEATURES:
+1. Landing page with hero section explaining the service
+2. Contract upload interface (drag & drop PDF/DOCX, max 10MB)
+3. Real-time analysis progress indicator
+4. Results dashboard showing:
+   - Overall risk score (0-100 scale with color coding)
+   - Red flags detection (list with severity levels)
+   - Key clauses analysis (payment terms, IP rights, termination, liability)
+   - Recommendations section with actionable advice
+5. Pricing page ($5 per review, with bundle discounts)
+6. User authentication (email + Google OAuth)
+7. Payment integration (Stripe checkout)
+8. User dashboard with review history
+
+TECH STACK:
+- Frontend: React + TypeScript + Vite
+- Styling: Tailwind CSS + shadcn/ui components
+- State: React Context + localStorage
+- Forms: React Hook Form + Zod validation
+- Icons: Lucide React
+- File upload: react-dropzone
+- PDF display: react-pdf
+- Charts: Recharts for risk visualization
+
+DESIGN REQUIREMENTS:
+- Modern, professional, trustworthy aesthetic
+- Dark mode support
+- Responsive (mobile-first)
+- Color scheme: Blue (#2563eb) primary, Red (#dc2626) for warnings, Green (#16a34a) for safe
+- Use shadcn/ui components: Button, Card, Badge, Alert, Progress, Tabs, Dialog, Accordion
+- Smooth animations and transitions
+- Professional legal/business feel
+
+KEY PAGES STRUCTURE:
+1. / (landing page with features, how it works, testimonials, CTA)
+2. /upload (contract upload interface)
+3. /analysis/[id] (analysis results page)
+4. /pricing (pricing tiers and bundles)
+5. /dashboard (user's review history)
+6. /auth (login/signup)
+
+IMPORTANT:
+- Use mock data for now (we'll connect real AI later)
+- Include comprehensive TypeScript types
+- Add proper error handling and loading states
+- Make file upload robust with validation
+- Create reusable components
+- Add proper routing with React Router
+- Include a professional footer with links
+- Add a simple navbar with logo and navigation
+- Make it production-ready UI (we'll add backend later)
+
+MOCK ANALYSIS RESULT (for testing):
+- Risk Score: 67/100 (Medium Risk)
+- Red Flags: 
+  * "Unlimited liability clause detected"
+  * "No payment timeline specified"
+  * "IP rights transfer unclear"
+- Safe Clauses:
+  * "Standard termination notice (30 days)"
+  * "Confidentiality agreement included"
+- Recommendations:
+  * "Request specific payment milestones"
+  * "Clarify IP ownership in writing"
+  * "Add liability cap clause"

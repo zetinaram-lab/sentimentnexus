@@ -1,0 +1,298 @@
+# 🎯 SUPER PROMPT PARA LOVABLE - ContractGuard MVP
+
+## PROMPT INICIAL (Día 1 - Usar en Lovable)
+
+```
+Create a professional contract review SaaS application called "ContractGuard" for freelancers.
+
+CORE FEATURES:
+1. Landing page with hero section explaining the service
+2. Contract upload interface (drag & drop PDF/DOCX, max 10MB)
+3. Real-time analysis progress indicator
+4. Results dashboard showing:
+   - Overall risk score (0-100 scale with color coding)
+   - Red flags detection (list with severity levels)
+   - Key clauses analysis (payment terms, IP rights, termination, liability)
+   - Recommendations section with actionable advice
+5. Pricing page ($5 per review, with bundle discounts)
+6. User authentication (email + Google OAuth)
+7. Payment integration (Stripe checkout)
+8. User dashboard with review history
+
+TECH STACK:
+- Frontend: React + TypeScript + Vite
+- Styling: Tailwind CSS + shadcn/ui components
+- State: React Context + localStorage
+- Forms: React Hook Form + Zod validation
+- Icons: Lucide React
+- File upload: react-dropzone
+- PDF display: react-pdf
+- Charts: Recharts for risk visualization
+
+DESIGN REQUIREMENTS:
+- Modern, professional, trustworthy aesthetic
+- Dark mode support
+- Responsive (mobile-first)
+- Color scheme: Blue (#2563eb) primary, Red (#dc2626) for warnings, Green (#16a34a) for safe
+- Use shadcn/ui components: Button, Card, Badge, Alert, Progress, Tabs, Dialog, Accordion
+- Smooth animations and transitions
+- Professional legal/business feel
+
+KEY PAGES STRUCTURE:
+1. / (landing page with features, how it works, testimonials, CTA)
+2. /upload (contract upload interface)
+3. /analysis/[id] (analysis results page)
+4. /pricing (pricing tiers and bundles)
+5. /dashboard (user's review history)
+6. /auth (login/signup)
+
+IMPORTANT:
+- Use mock data for now (we'll connect real AI later)
+- Include comprehensive TypeScript types
+- Add proper error handling and loading states
+- Make file upload robust with validation
+- Create reusable components
+- Add proper routing with React Router
+- Include a professional footer with links
+- Add a simple navbar with logo and navigation
+- Make it production-ready UI (we'll add backend later)
+
+MOCK ANALYSIS RESULT (for testing):
+- Risk Score: 67/100 (Medium Risk)
+- Red Flags: 
+  * "Unlimited liability clause detected"
+  * "No payment timeline specified"
+  * "IP rights transfer unclear"
+- Safe Clauses:
+  * "Standard termination notice (30 days)"
+  * "Confidentiality agreement included"
+- Recommendations:
+  * "Request specific payment milestones"
+  * "Clarify IP ownership in writing"
+  * "Add liability cap clause"
+```
+
+---
+
+## 📋 PLAN DE 7 DÍAS EN LOVABLE (5 créditos/día)
+
+### **DÍA 1-2** (10 créditos): Base + Landing
+- Prompt inicial completo
+- Estructura de proyecto
+- Landing page profesional
+- Sistema de routing
+
+### **DÍA 3-4** (10 créditos): Upload + Análisis
+- Interface de upload con drag & drop
+- Página de resultados con mock data
+- Visualización de risk score
+- Red flags display
+
+### **DÍA 5-6** (10 créditos): Auth + Dashboard
+- Sistema de autenticación
+- Dashboard de usuario
+- Historial de análisis
+- Integración Stripe (frontend)
+
+### **DÍA 7** (5 créditos): Polish
+- Dark mode
+- Responsive fixes
+- Animaciones
+- Testing final
+
+**TOTAL: 35 créditos = 7 días**
+
+---
+
+## 🔧 QUÉ HAREMOS AQUÍ DESPUÉS (Día 8-14)
+
+### **Backend** (Node.js + Express)
+```typescript
+// Ya tendremos el código de Lovable aquí
+// Agregaremos:
+
+1. API Routes:
+   POST /api/analyze - Procesar contrato
+   GET /api/analysis/:id - Obtener resultado
+   POST /api/auth/login - Autenticación
+   POST /api/payment/checkout - Crear sesión Stripe
+
+2. Gemini Pro Integration:
+   - Parser de PDF/DOCX
+   - Prompt engineering para análisis
+   - Detección de red flags
+   - Scoring algorithm
+
+3. Database (Supabase Free Tier):
+   - users table
+   - contracts table
+   - analyses table
+   - payments table
+
+4. File Storage (AWS S3 Education):
+   - Guardar contratos (encrypted)
+   - 100 GB gratis con AWS Educate
+```
+
+### **Gemini Pro Integration** (GRATIS)
+```typescript
+// /api/analyze endpoint
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+const analyzeContract = async (contractText: string) => {
+  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+  
+  const prompt = `
+    Eres un experto abogado especializado en contratos freelance.
+    Analiza este contrato y proporciona:
+    
+    1. Risk Score (0-100)
+    2. Red Flags (lista con severidad: HIGH, MEDIUM, LOW)
+    3. Safe Clauses (lista)
+    4. Recommendations (lista de acciones)
+    
+    Contrato:
+    ${contractText}
+    
+    Responde en JSON format:
+    {
+      "riskScore": number,
+      "redFlags": [{"text": string, "severity": string, "explanation": string}],
+      "safeClauses": [{"text": string, "category": string}],
+      "recommendations": [{"action": string, "priority": string, "reasoning": string}]
+    }
+  `;
+  
+  const result = await model.generateContent(prompt);
+  return JSON.parse(result.response.text());
+};
+```
+
+---
+
+## 💰 STACK GRATUITO COMPLETO
+
+| Servicio | Plan Gratis | Uso |
+|----------|-------------|-----|
+| **Gemini Pro** | 60 req/min gratis | Análisis AI |
+| **Vercel** | Unlimited deploys | Hosting frontend |
+| **Supabase** | 500MB DB, 1GB storage | Database + Auth |
+| **AWS S3 Educate** | 100GB + $100 créditos | File storage |
+| **Stripe** | Gratis hasta $1M | Pagos |
+| **GitHub Education** | GitHub Pro gratis | Repo + CI/CD |
+| **Resend** | 3K emails/mes gratis | Notificaciones |
+
+**Costo mensual real: $0** (hasta ~1000 análisis/mes)
+
+---
+
+## 📊 ESTIMACIÓN REALISTA
+
+### **Semana 1** (Lovable):
+- Frontend completo
+- UI/UX profesional
+- Mock data funcionando
+- ✅ **DEMO-ABLE** para validación
+
+### **Semana 2** (Aquí):
+- Backend con Gemini Pro
+- Base de datos Supabase
+- Stripe integration
+- File upload a S3
+- ✅ **PRODUCTION-READY**
+
+### **Semana 3** (Launch):
+- Deploy a producción
+- Testing con usuarios reales
+- Primeros 10 clientes objetivo
+- ✅ **REVENUE GENERATING**
+
+---
+
+## 🎯 VENTAJAS DE ESTA ESTRATEGIA
+
+✅ **Lovable hace lo difícil**: UI/UX profesional sin código
+✅ **Tú haces lo único**: Gemini Pro integration (tu ventaja)
+✅ **Todo gratis**: $0 hasta primeros $5K revenue
+✅ **Rápido**: 2 semanas vs 6 semanas
+✅ **Validable**: Demo en 7 días para mostrar
+✅ **Escalable**: Gemini Pro gratis hasta 60 req/min
+
+---
+
+## 🚀 SIGUIENTE PASO
+
+**MAÑANA (27 dic):**
+1. ✅ Abre Lovable
+2. ✅ Copia el SUPER PROMPT de arriba
+3. ✅ Genera proyecto
+4. ✅ Itera con tus 5 créditos del día
+5. ✅ Comparte el link preview conmigo
+
+**MIENTRAS (yo trabajo en):**
+- ✅ Setup de Gemini Pro API
+- ✅ Prompt engineering para análisis
+- ✅ Estructura de backend
+- ✅ Schema de Supabase
+
+---
+
+## 📝 NOTAS IMPORTANTES
+
+1. **Lovable es PERFECTO para:**
+   - Diseño profesional
+   - Componentes UI
+   - Routing y navegación
+   - Animaciones y transiciones
+   - Responsive design
+
+2. **NO uses Lovable para:**
+   - Lógica de AI (lo haremos aquí)
+   - Backend complejo (lo haremos aquí)
+   - Integraciones de pago real (lo haremos aquí)
+
+3. **Enfócate en:**
+   - UI que inspire confianza
+   - UX fluido para upload
+   - Visualización clara de riesgos
+   - Mobile-first design
+
+---
+
+## 💡 TIPS PARA MAXIMIZAR LOVABLE
+
+1. **Primer crédito**: Generate completo con el super prompt
+2. **Créditos 2-3**: "Make the landing page more professional with better copy and testimonials"
+3. **Créditos 4-5**: "Improve the analysis results page with better visualizations"
+4. **Día 2**: Iteraciones de UI/UX
+5. **Día 3-5**: Features específicas
+6. **Día 6-7**: Polish y responsive
+
+---
+
+## ✅ CHECKLIST FINAL LOVABLE
+
+Antes de traer el código aquí, asegúrate que tenga:
+
+- [ ] Landing page convincente
+- [ ] Upload interface intuitivo
+- [ ] Results page con visualizaciones
+- [ ] Pricing page clara
+- [ ] User dashboard funcional
+- [ ] Auth flows completos
+- [ ] Dark mode
+- [ ] Mobile responsive
+- [ ] Loading states
+- [ ] Error handling UI
+- [ ] Professional typography
+- [ ] Consistent color scheme
+- [ ] Smooth animations
+- [ ] SEO meta tags
+- [ ] Proper TypeScript types
+
+---
+
+🎯 **OBJETIVO**: En 7 días tener un frontend tan profesional que cuando agregues el AI backend, parezca un producto de $1M.
+

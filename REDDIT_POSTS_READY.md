@@ -2,33 +2,108 @@
 
 ---
 
-## 📋 ESTRATEGIA REDDIT
+## � HOW TO USE THESE TEMPLATES
+
+**BEFORE YOU START:**
+1. Replace `[Product Name]` with your actual product name
+2. Replace `[category/industry]` with your specific domain (e.g., "trading", "productivity", "AI tool")
+3. Replace `[target audience]` with who uses your product
+4. Replace `[tech stack]` with your actual technologies
+5. Replace `[your-links]` with your URLs
+6. **IMPORTANT**: Adapt the tone to match each subreddit's culture
+
+**SUCCESS TIPS:**
+- Don't post to all subreddits the same day (you'll get shadowbanned)
+- Engage with comments within 5 minutes
+- Be genuine, not salesy
+- Each subreddit has different rules - read them first!
+
+---
+
+## �📋 ESTRATEGIA REDDIT
 
 **Regla de oro:** NO postear todo el mismo día
 - Día 1: r/SideProject (friendly community)
-- Día 2: r/reactjs (tech focus)
-- Día 3: r/CryptoCurrency (target audience)
-- Día 4: r/investing (conservative approach)
+- Día 2-3: [Choose 1-2 tech-specific subreddits based on your stack]
+- Día 4-5: [Choose 1-2 industry-specific subreddits based on your product]
 
 ---
 
 ## 1️⃣ r/SideProject (273K miembros) - **EMPEZAR AQUÍ**
 
+**Why start here:** Most supportive community, welcomes all types of projects
+
 ### **POST:**
 
 **Título:**
 ```
-[Feedback] Built a real-time gold price tracker with Telegram alerts (React + TypeScript)
+[Feedback] Built a [category] with [key technology] - [Main Benefit]
+
+Examples:
+- "[Feedback] Built a real-time analytics dashboard (React + TypeScript)"
+- "[Feedback] Built an AI writing assistant with GPT-4 integration"
+- "[Feedback] Built a productivity tool for remote teams (Next.js + Supabase)"
 ```
 
 **Contenido:**
 ```
 Hey r/SideProject! 👋
 
-Just launched **SentimentNexus** - a free dashboard to track gold (XAU/USD) prices in real-time with automated Telegram alerts.
+Just launched **[Product Name]** - a [brief description with main benefit].
 
 **The Story:**
-Started as a weekend project to learn Telegram Bot API. Ended up building a full trading dashboard with real-time data streaming and technical analysis.
+Started as a [timeframe] project to learn [technology/API]. Ended up building 
+[what it became].
+
+**Tech Stack:**
+- [Frontend: e.g., React 18 + TypeScript]
+- [Build tool: e.g., Vite / Next.js]
+- [UI library: e.g., shadcn/ui + Tailwind CSS]
+- [Backend/Functions: e.g., Vercel serverless / Supabase]
+- [Key integrations: e.g., Stripe, Auth0, APIs]
+
+**Features:**
+✅ [Feature 1 with specific benefit]
+✅ [Feature 2 with specific benefit]
+✅ [Feature 3 with specific benefit]
+✅ [Feature 4 with specific benefit]
+✅ [Unique selling point]
+
+**Challenges I faced:**
+1. [Technical challenge 1]
+2. [Technical challenge 2]
+3. [Technical challenge 3]
+
+**What I learned:**
+- [Lesson 1]
+- [Lesson 2]
+- [Lesson 3]
+
+**Links:**
+🌐 Live demo: [your-url]
+💻 GitHub: [your-repo] (if open source)
+🔗 [Other relevant links]
+
+**Looking for feedback on:**
+- [Specific area 1]
+- [Specific area 2]
+- [Specific area 3]
+
+**Full disclosure:** [Built with AI assistance / Solo project / Team effort - be transparent]
+
+Would love your honest feedback! 🚀
+
+---
+
+REAL EXAMPLE (SentimentNexus - Trading Dashboard):
+"Hey r/SideProject! 👋
+
+Just launched **SentimentNexus** - a free dashboard to track gold (XAU/USD) prices 
+in real-time with automated Telegram alerts.
+
+**The Story:**
+Started as a weekend project to learn Telegram Bot API. Ended up building a full 
+trading dashboard with real-time data streaming and technical analysis.
 
 **Tech Stack:**
 - React 18 + TypeScript (strict mode)
@@ -69,9 +144,10 @@ Started as a weekend project to learn Telegram Bot API. Ended up building a full
 - Feature suggestions
 - Code review (PRs welcome!)
 
-**Full disclosure:** Built with AI assistance (Claude Sonnet) as a learning project. Great way to learn new tech while building something useful!
+**Full disclosure:** Built with AI assistance (Claude Sonnet) as a learning project. 
+Great way to learn new tech while building something useful!
 
-Would love your honest feedback! 🚀
+Would love your honest feedback! 🚀"
 ```
 
 **Flair:** `Feedback` o `Showcase`

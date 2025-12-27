@@ -2,7 +2,195 @@
 
 ---
 
-## 🎯 POST OPTIMIZADO
+## 📖 HOW TO USE THESE TEMPLATES
+
+**CHOOSE YOUR VARIANT BASED ON YOUR PRODUCT:**
+- **Variant A**: Technical/Developer audience (show off your stack)
+- **Variant B**: Business/Founder audience (emphasize problem-solving)
+- **Variant C**: Learning/Student audience (share your journey)
+- **Variant D**: Open Source community (highlight collaboration)
+
+**BEFORE POSTING:**
+1. Replace all `[placeholders]` with your actual content
+2. Choose 5-8 relevant hashtags (don't use more than 8)
+3. Attach 3-4 high-quality screenshots
+4. Post on Tuesday, Wednesday, or Thursday at 8-9 AM, 12-1 PM, or 5-6 PM
+
+---
+
+## 🎯 VARIANT A: TECHNICAL LAUNCH (For Developer Tools/Tech Products)
+
+```
+🚀 Just launched [Product Name] - A [category] built with [key technology]!
+
+Built as a [learning project / side project / solution to X problem] to explore 
+[technology/concept].
+
+✨ What it does:
+• [Feature 1 with specific benefit]
+• [Feature 2 with specific benefit]
+• [Feature 3 with specific benefit]
+• [Unique selling point]
+
+🛠️ Tech Stack:
+[Frontend], [Backend/Build tool], [UI framework], [Deployment], [Key integrations]
+
+📊 Features:
+• [Technical feature 1]
+• [Technical feature 2]
+• [Technical feature 3]
+• [Data/export capability]
+
+🌐 Try it live: [Your URL]
+💻 Open source: [GitHub URL] (if applicable)
+[Other relevant links]
+
+This was built with [AI tool / from scratch / with a team] as a [full-stack development / 
+learning / innovation] project. The goal was to understand [technology concept / API 
+integration / architecture pattern].
+
+💡 Looking for feedback from the community! What features would you add?
+
+#WebDevelopment #[YourFramework] #[YourLanguage] #OpenSource #Tech #[YourIndustry] 
+#Productivity #BuildInPublic #SideProject #DeveloperTools
+```
+
+---
+
+## 🎯 VARIANT B: BUSINESS LAUNCH (For SaaS/Business Tools)
+
+```
+💡 Excited to share [Product Name] - solving [specific problem] for [target audience]!
+
+After [timeframe] of development, we're launching a [category] that [main benefit].
+
+🎯 The Problem:
+[Describe the pain point your target audience faces - make it relatable]
+
+✅ The Solution:
+• [Benefit 1]: [Specific outcome]
+• [Benefit 2]: [Specific outcome]
+• [Benefit 3]: [Specific outcome]
+• [Benefit 4]: [Specific outcome]
+
+📈 Why now?
+[Market timing / personal experience / industry gap]
+
+🚀 What's next:
+We're starting with [current focus] and planning to add [future features] based on 
+community feedback.
+
+🔗 Check it out: [Your URL]
+
+Built for [target personas: e.g., founders, marketers, designers]. Would love to hear 
+your thoughts!
+
+#SaaS #Startup #Entrepreneurship #[YourIndustry] #ProductLaunch #Innovation #Business 
+#BuildInPublic #Productivity #TechStartup
+```
+
+---
+
+## 🎯 VARIANT C: LEARNING JOURNEY (For Students/Career Changers)
+
+```
+🎓 I just launched my first [product type]! Here's what I learned building [Product Name]
+
+[X months] ago, I decided to learn [technology/skill] by building something real. 
+Today, I'm sharing [Product Name] with the world.
+
+📚 What I learned:
+• [Technical lesson 1]
+• [Technical lesson 2]
+• [Technical lesson 3]
+• [Soft skill lesson: e.g., shipping over perfection]
+
+🛠️ What I built:
+A [category] that [main benefit]. Features:
+• [Feature 1]
+• [Feature 2]
+• [Feature 3]
+
+🚀 Tech Stack:
+[List your technologies - shows what you learned]
+
+💡 Key takeaways:
+1. [Lesson about building/launching]
+2. [Lesson about technology]
+3. [Lesson about community/feedback]
+
+🌐 Try it: [Your URL]
+💻 Code: [GitHub URL] (if applicable)
+
+To everyone learning to code: Just start building. Ship it before it's perfect. 
+Learn in public.
+
+What should I build next? Open to suggestions! 🚀
+
+#LearningInPublic #WebDevelopment #CodingJourney #[YourTech] #Developer #Career 
+#SelfTaught #Tech #BuildInPublic #FirstProject
+```
+
+---
+
+## 🎯 VARIANT D: OPEN SOURCE COMMUNITY (For OSS Projects)
+
+```
+🌟 Proud to open source [Product Name] - A [category] for [target audience]
+
+After [timeframe] of development, we're releasing [Product Name] to the community 
+under [license: MIT/Apache/GPL].
+
+🎯 What it solves:
+[Problem statement - why this matters to the community]
+
+✨ Features:
+• [Feature 1]
+• [Feature 2]
+• [Feature 3]
+• [Extensibility/API features]
+
+🛠️ Built with:
+[Tech stack - emphasize modern/popular technologies]
+
+🤝 Looking for:
+• Contributors (especially [specific skills])
+• Feedback on architecture
+• Ideas for [specific feature area]
+• Translations ([if applicable])
+
+📖 Full docs: [Documentation URL]
+💻 Contribute: [GitHub URL]
+🌐 Try it: [Demo URL]
+
+Why open source?
+[Your philosophy: learning, giving back, collaboration, transparency, etc.]
+
+If you find it useful, give it a ⭐ on GitHub! PRs welcome 🚀
+
+#OpenSource #Developer #Tech #[YourTech] #Community #Collaboration #[YourIndustry] 
+#BuildInPublic #GitHub #SoftwareDevelopment
+```
+
+---
+
+## 📸 IMÁGENES SUGERIDAS
+
+**Adjuntar 3-4 screenshots:**
+1. Hero/main dashboard/interface
+2. Key feature in action
+3. [Mobile view / Behind the scenes / Code snippet]
+4. [Results/metrics / User testimonial / Comparison]
+
+**Tips for images:**
+- Use high resolution (at least 1200px wide)
+- Add subtle borders or shadows for polish
+- Show real data/usage (not Lorem Ipsum)
+- For technical audiences: Include code snippets or architecture diagrams
+
+---
+
+## 🎯 REAL EXAMPLE - VARIANT A (Technical)
 
 ```
 🚀 Just launched SentimentNexus - A free, open-source gold trading dashboard!

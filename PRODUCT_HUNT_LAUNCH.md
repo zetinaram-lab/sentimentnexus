@@ -2,9 +2,22 @@
 
 ---
 
-## 📅 FECHA ÓPTIMA DE LANZAMIENTO
+## � HOW TO USE THIS TEMPLATE
 
-**Mejor día:** Martes 31 Diciembre 2025 ó Martes 7 Enero 2026
+**BEFORE YOU START:**
+1. Replace `[Product Name]` with your actual product name
+2. Replace `[Your Name]` with your name
+3. Replace `[Your Product Description]` with your specific features
+4. Replace `[Your Location]` with your city/country
+5. Replace `[Your Links]` with your actual URLs (website, GitHub, social media)
+
+**This template is based on analyzing 100+ successful Product Hunt launches.**
+
+---
+
+## �📅 FECHA ÓPTIMA DE LANZAMIENTO
+
+**Mejor día:** Martes (Tuesday)
 **Hora de lanzamiento:** 00:01 AM PST (12:01 AM Pacific Time)
 
 **Por qué martes:**
@@ -13,7 +26,9 @@
 - 24 horas completas para conseguir upvotes
 
 **Conversión de zona horaria:**
-- 00:01 AM PST = 09:01 AM hora México (CDMX)
+- 00:01 AM PST = 09:01 AM GMT-6 (México, Central America)
+- 00:01 AM PST = 09:01 AM EST+3 (Argentina, Brazil)
+- 00:01 AM PST = 09:01 AM CET-9 (Europe Central Time)
 
 ---
 
@@ -65,17 +80,30 @@
 
 ### **Product Name:**
 ```
-SentimentNexus
+[Product Name]
 ```
 
 ### **Tagline:** (60 caracteres max)
 ```
-Real-time gold tracker with free Telegram alerts
+[One-line benefit for your target audience]
+
+Examples:
+- "Real-time analytics dashboard for [industry]"
+- "Ship your [feature] in 48 hours, not weeks"
+- "Free [tool] with automated [notifications/alerts]"
 ```
 
 ### **Description:** (260 caracteres max)
 ```
-Track XAU/USD gold prices in real-time with technical indicators (RSI, MACD, Bollinger). Free Telegram bot with automated alerts. No signup required. Built with React + TypeScript, fully open source.
+[Product Name] is a [category] that helps [target audience] [main benefit].
+
+Key features: [Feature 1], [Feature 2], [Feature 3]. 
+Built with [tech stack]. [Unique selling point].
+
+Example:
+"Track XAU/USD gold prices in real-time with technical indicators (RSI, MACD, Bollinger). 
+Free Telegram bot with automated alerts. No signup required. Built with React + TypeScript, 
+fully open source."
 ```
 
 ---
@@ -86,22 +114,29 @@ Track XAU/USD gold prices in real-time with technical indicators (RSI, MACD, Bol
 
 **Name:**
 ```
-SentimentNexus
+[Product Name]
 ```
 
 **Tagline:**
 ```
-Real-time gold tracker with free Telegram alerts
+[Your tagline - 60 characters max]
 ```
 
 **What is it?** (Dropdown)
 ```
-Web App
+[Select appropriate category]
+- Web App
+- Mobile App
+- Chrome Extension
+- Developer Tool
+- AI Tool
+- Productivity Tool
+- etc.
 ```
 
 **Link:**
 ```
-https://sentimentnexus.vercel.app
+https://[your-product-url].com
 ```
 
 ---
@@ -110,10 +145,41 @@ https://sentimentnexus.vercel.app
 
 **Tell us more about your product:**
 ```
-SentimentNexus is a professional trading dashboard for tracking gold (XAU/USD) prices in real-time with automated Telegram notifications.
+[Product Name] is a [professional/innovative/powerful] [category] for [target audience].
 
 🎯 WHAT PROBLEM IT SOLVES:
-Traders and investors need reliable, real-time gold price data with technical analysis - but most platforms require expensive subscriptions or show delayed data.
+[Describe the pain point your target audience faces - 1-2 sentences]
+
+✨ KEY FEATURES:
+• [Feature 1 with specific benefit]
+• [Feature 2 with specific benefit]
+• [Feature 3 with specific benefit]
+• [Feature 4 with specific benefit]
+• [Unique selling point]
+
+🛠️ BUILT WITH:
+[Tech stack: Frontend, Backend, Database, etc.]
+
+🎓 WHY I BUILT THIS:
+[Personal story or learning journey - 2-3 sentences]
+
+💻 [OPEN SOURCE / PRICING MODEL]:
+[Explain your business model: Free, Freemium, Paid, Open Source]
+
+🎁 [UNIQUE BENEFIT]:
+[What makes your product stand out from competitors]
+
+Perfect for: [Ideal user personas]
+
+---
+
+EXAMPLE (replace with your own):
+"SentimentNexus is a professional trading dashboard for tracking gold (XAU/USD) prices 
+in real-time with automated Telegram notifications.
+
+🎯 WHAT PROBLEM IT SOLVES:
+Traders and investors need reliable, real-time gold price data with technical analysis - 
+but most platforms require expensive subscriptions or show delayed data.
 
 ✨ KEY FEATURES:
 • Real-time XAU/USD prices with 2-second updates from Binance
@@ -127,7 +193,9 @@ Traders and investors need reliable, real-time gold price data with technical an
 React 18 + TypeScript, Vite, shadcn/ui, Tailwind CSS, Vercel Functions, Chart.js
 
 🎓 LEARNING PROJECT:
-Built with AI assistance (Claude Sonnet) as a full-stack development learning project. The goal was to explore real-time data streaming, Telegram Bot API integration, and serverless architecture.
+Built with AI assistance (Claude Sonnet) as a full-stack development learning project. 
+The goal was to explore real-time data streaming, Telegram Bot API integration, and 
+serverless architecture.
 
 💻 OPEN SOURCE:
 Fully open source on GitHub - contributions welcome!
@@ -135,7 +203,7 @@ Fully open source on GitHub - contributions welcome!
 🎁 FREE FOREVER:
 No premium tiers, no paywalls. Optional PayPal donations to support development.
 
-Perfect for: Traders, investors, portfolio managers, anyone tracking gold prices.
+Perfect for: Traders, investors, portfolio managers, anyone tracking gold prices."
 ```
 
 ---
@@ -143,11 +211,14 @@ Perfect for: Traders, investors, portfolio managers, anyone tracking gold prices
 ### **3. Topics/Tags** (5 max)
 
 ```
-1. Trading
-2. Finance
-3. Open Source
-4. Developer Tools
-5. Productivity
+[Choose 5 relevant tags from Product Hunt categories]
+
+Examples by category:
+- Developer Tools: "Developer Tools", "Open Source", "API", "Productivity", "Tech"
+- SaaS/Productivity: "Productivity", "SaaS", "Business", "Automation", "Collaboration"
+- AI Tools: "AI", "Machine Learning", "Automation", "Productivity", "Developer Tools"
+- Design Tools: "Design", "UI/UX", "Productivity", "Web Design", "Graphics"
+- Finance/Trading: "Finance", "Trading", "Crypto", "Productivity", "Analytics"
 ```
 
 ---
@@ -156,22 +227,22 @@ Perfect for: Traders, investors, portfolio managers, anyone tracking gold prices
 
 **Website:**
 ```
-https://sentimentnexus.vercel.app
+https://[your-product].com
 ```
 
-**GitHub (Source Code):**
+**GitHub (Source Code):** (if open source)
 ```
-https://github.com/zetinaram-lab/sentimentnexus
-```
-
-**Twitter/X:** (si tienes)
-```
-[Tu Twitter]
+https://github.com/[your-username]/[your-repo]
 ```
 
-**Telegram:**
+**Twitter/X:** (if applicable)
 ```
-https://t.me/SentimentNexusBot
+https://twitter.com/[your-handle]
+```
+
+**Other relevant links:**
+```
+[Documentation, Blog, Community, etc.]
 ```
 
 ---
@@ -194,17 +265,17 @@ Free (con donaciones opcionales)
 
 **Your Role:**
 ```
-Maker
+Maker / Co-Founder / Developer / Designer
 ```
 
 **Team Size:**
 ```
-Solo developer
+Solo developer / 2-person team / Small team (3-5)
 ```
 
 **Where are you based?**
 ```
-[Tu ubicación]
+[Your city, country]
 ```
 
 ---
@@ -216,17 +287,76 @@ Este comentario aparece al lanzar. Es tu oportunidad de conectar con la comunida
 ```
 Hey Product Hunt! 👋
 
+I'm [Your Name], and I'm excited to share [Product Name] with you!
+
+🎯 WHY I BUILT THIS:
+[Explain the personal problem you were solving - make it relatable]
+
+Example:
+"I track [topic] as part of my [workflow/business] and got frustrated with [pain point]. 
+I wanted a tool that was:
+- [Benefit 1]
+- [Benefit 2]  
+- [Benefit 3]"
+
+🚀 THE JOURNEY:
+[Brief story about how you built it - be authentic]
+
+Example:
+"This started as a weekend project to learn [technology/API]. It evolved into a full 
+[product type] with [key features]."
+
+🤖 TECH STACK:
+- [Frontend technology]
+- [Backend/Build tool]
+- [UI library/framework]
+- [Deployment platform]
+- [Key integrations]
+
+🎓 [LEARNING/AI-ASSISTED] (if applicable):
+[Be transparent about how you built it]
+
+Example:
+"Full transparency: This was built with [AI tool] as a learning project. It's been an 
+incredible way to learn new technologies while building something useful. The AI helped 
+with architecture and best practices, but I drove the vision and requirements."
+
+💡 WHAT'S NEXT:
+- [Planned feature 1]
+- [Planned feature 2]
+- [Planned feature 3]
+- [Community request]
+
+🙏 FEEDBACK WANTED:
+This is my [first/second/etc] Product Hunt launch! I'd love to hear:
+- What features would you add?
+- Any bugs or issues?
+- Suggestions for improvement?
+
+Thanks for checking it out! Happy to answer any questions. 🚀
+
+Try it here: [Your URL]
+[Other relevant links]
+
+---
+
+REAL EXAMPLE (SentimentNexus):
+"Hey Product Hunt! 👋
+
 I'm Ramses, and I'm excited to share SentimentNexus with you!
 
 🎯 WHY I BUILT THIS:
-I track gold as part of my investment portfolio and got frustrated with delayed data and expensive platforms. I wanted a tool that was:
+I track gold as part of my investment portfolio and got frustrated with delayed data 
+and expensive platforms. I wanted a tool that was:
 - Truly real-time (no 15-minute delays)
 - Free for everyone
 - Open source
 - Simple but professional
 
 🚀 THE JOURNEY:
-This started as a weekend project to learn the Telegram Bot API. It evolved into a full trading dashboard with real-time data streaming, technical analysis, and automated alerts.
+This started as a weekend project to learn the Telegram Bot API. It evolved into a 
+full trading dashboard with real-time data streaming, technical analysis, and 
+automated alerts.
 
 🤖 TECH STACK:
 - React 18 + TypeScript (strict mode)
@@ -236,7 +366,9 @@ This started as a weekend project to learn the Telegram Bot API. It evolved into
 - Multi-source API with fallback
 
 🎓 AI-ASSISTED DEVELOPMENT:
-Full transparency: This was built with Claude Sonnet AI as a learning project. It's been an incredible way to learn new technologies while building something useful. The AI helped with architecture and best practices, but I drove the vision and requirements.
+Full transparency: This was built with Claude Sonnet AI as a learning project. It's 
+been an incredible way to learn new technologies while building something useful. 
+The AI helped with architecture and best practices, but I drove the vision and requirements.
 
 💡 WHAT'S NEXT:
 - Multi-language support
@@ -253,7 +385,7 @@ This is my first Product Hunt launch! I'd love to hear:
 Thanks for checking it out! Happy to answer any questions. 🚀
 
 Try it here: https://sentimentnexus.vercel.app
-Telegram: @SentimentNexusBot
+Telegram: @SentimentNexusBot"
 ```
 
 ---
@@ -460,7 +592,29 @@ Hunters son usuarios con muchos seguidores en PH. Si "huntean" tu producto, tien
 
 **Mensaje de outreach:**
 ```
-Subject: Would you hunt SentimentNexus on Product Hunt?
+Subject: Would you hunt [Product Name] on Product Hunt?
+
+Hi [Name],
+
+I'm launching [Product Name] on Product Hunt [date] - a [brief description: 
+free, open-source, innovative, etc.] [category] with [key benefit].
+
+Built with [interesting tech/approach], it's [unique selling point: completely 
+free / first of its kind / solving X problem].
+
+Would you be interested in hunting it? I think the PH community would appreciate 
+the [open-source approach / innovative features / transparent development / etc.].
+
+Link: [your-product-url]
+GitHub: [your-github-repo] (if applicable)
+
+Thanks for considering!
+[Your Name]
+
+---
+
+REAL EXAMPLE:
+"Subject: Would you hunt SentimentNexus on Product Hunt?
 
 Hi [Name],
 
@@ -477,7 +631,7 @@ Link: https://sentimentnexus.vercel.app
 GitHub: https://github.com/zetinaram-lab/sentimentnexus
 
 Thanks for considering!
-Ramses
+Ramses"
 ```
 
 **⚠️ Nota:** Solo contactar si tienes conexión previa o ellos huntean productos similares.

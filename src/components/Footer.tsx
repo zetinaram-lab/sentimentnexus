@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { Card } from '@/components/ui/card';
-import { Github, Linkedin, Heart, Code, Coffee } from 'lucide-react';
+import { Github, Linkedin, Heart, Code, Coffee, Sparkles } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
@@ -86,16 +86,31 @@ export const Footer: React.FC = () => {
         {/* Bottom Bar */}
         <div className="mt-6 pt-4 border-t border-gray-700/50">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col md:flex-row items-center gap-3">
               <div className="flex items-center gap-1">
                 <span className="text-gray-400 text-xs">Hecho con</span>
                 <Heart className="w-3 h-3 text-pink-500 animate-pulse" />
                 <span className="text-gray-400 text-xs">para la comunidad</span>
               </div>
+              
+              {/* AI Transparency Badge */}
+              <div className="flex items-center gap-1 px-2 py-1 bg-purple-500/10 text-purple-400 text-[10px] rounded border border-purple-500/30">
+                <Sparkles className="w-3 h-3" />
+                <span>Built with AI assistance</span>
+              </div>
             </div>
 
             <div className="flex items-center gap-4 text-[10px] text-gray-500">
               <span>© 2025 SentimentNexus</span>
+              <span>•</span>
+              <a 
+                href="https://github.com/zetinaram-lab/sentimentnexus/blob/main/ABOUT_THE_PROJECT.md" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-cyan-400 transition-colors"
+              >
+                About
+              </a>
               <span>•</span>
               <a href="#" className="hover:text-cyan-400 transition-colors">
                 Términos

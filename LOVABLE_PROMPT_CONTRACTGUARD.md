@@ -74,65 +74,100 @@ MOCK ANALYSIS RESULT (for testing):
 
 ---
 
-## 📋 PLAN DE 7 DÍAS EN LOVABLE (5 créditos/día)
+## 📋 PLAN OPTIMIZADO DE 3 DÍAS EN LOVABLE (25 créditos bonus)
 
-### **DÍA 1-2** (10 créditos): Base + Landing
-- Prompt inicial completo
-- Estructura de proyecto
-- Landing page profesional
-- Sistema de routing
+### **DÍA 1** (10 créditos): Core Features 🔥
+1. **Generate proyecto base** (2 créditos)
+   - Estructura completa + routing
+   - Landing page profesional
+   
+2. **Upload interface** (2 créditos)
+   - Drag & drop PDF/DOCX
+   - File validation + progress
+   
+3. **Results page** (2 créditos)
+   - Risk score visualization
+   - Red flags + recommendations
+   
+4. **Pricing page** (2 créditos)
+   - Tiers + comparison
+   - CTA buttons
+   
+5. **Landing polish** (2 créditos)
+   - Better copy + testimonials
+   - How it works section
 
-### **DÍA 3-4** (10 créditos): Upload + Análisis
-- Interface de upload con drag & drop
-- Página de resultados con mock data
-- Visualización de risk score
-- Red flags display
+### **DÍA 2** (10 créditos): Advanced Features 🎨
+1. **Authentication** (3 créditos)
+   - Login/signup + Google OAuth
+   - Protected routes + context
+   
+2. **Dashboard** (2 créditos)
+   - Review history + stats
+   - Quick actions
+   
+3. **Dark mode** (1 crédito)
+   - Theme toggle + persistence
+   
+4. **Mobile responsive** (2 créditos)
+   - Mobile menu + gestures
+   - Breakpoints optimization
+   
+5. **Animations** (2 créditos)
+   - Page transitions
+   - Micro-interactions
 
-### **DÍA 5-6** (10 créditos): Auth + Dashboard
-- Sistema de autenticación
-- Dashboard de usuario
-- Historial de análisis
-- Integración Stripe (frontend)
+### **DÍA 3** (5 créditos): Production Ready 🎯
+1. **Backend skeleton** (2 créditos)
+   - API routes + Express
+   - CORS + error handling
+   
+2. **Stripe integration** (1 crédito)
+   - Checkout + webhooks
+   
+3. **Final polish** (2 créditos)
+   - SEO + performance
+   - Accessibility + testing
 
-### **DÍA 7** (5 créditos): Polish
-- Dark mode
-- Responsive fixes
-- Animaciones
-- Testing final
-
-**TOTAL: 35 créditos = 7 días**
+**TOTAL: 25 créditos = 3 días** ⚡
+**TIEMPO AHORRADO: 4 días → Lanzamiento en 10 días vs 21 días**
 
 ---
 
-## 🔧 QUÉ HAREMOS AQUÍ DESPUÉS (Día 8-14)
+## 🔧 QUÉ HAREMOS AQUÍ DESPUÉS (Día 4-7)
 
-### **Backend** (Node.js + Express)
+### **Backend + AI Integration** (4 días)
 ```typescript
 // Ya tendremos el código de Lovable aquí
 // Agregaremos:
 
-1. API Routes:
-   POST /api/analyze - Procesar contrato
-   GET /api/analysis/:id - Obtener resultado
-   POST /api/auth/login - Autenticación
-   POST /api/payment/checkout - Crear sesión Stripe
-
-2. Gemini Pro Integration:
-   - Parser de PDF/DOCX
+DÍA 4-5: Setup + Gemini Pro
+   - API Routes (POST /api/analyze, GET /api/analysis/:id)
+   - Gemini Pro Integration (GRATIS)
+   - PDF/DOCX parser (pdf-parse + mammoth)
    - Prompt engineering para análisis
-   - Detección de red flags
-   - Scoring algorithm
 
-3. Database (Supabase Free Tier):
-   - users table
-   - contracts table
-   - analyses table
-   - payments table
+DÍA 6: Database + Storage
+   - Supabase setup (users, contracts, analyses, payments)
+   - AWS S3 Education (file storage encrypted)
+   - Auth integration
 
-4. File Storage (AWS S3 Education):
-   - Guardar contratos (encrypted)
-   - 100 GB gratis con AWS Educate
+DÍA 7: Testing + Deploy
+   - End-to-end testing
+   - Production deploy (Vercel)
+   - ✅ LIVE con primeros clientes
 ```
+
+## 🎯 TIMELINE OPTIMIZADO CON 25 CRÉDITOS
+
+| Fase | Días | Resultado |
+|------|------|-----------|
+| **Lovable MVP** | 1-3 | Frontend + Backend skeleton ✅ |
+| **Backend + AI** | 4-7 | Gemini Pro funcionando ✅ |
+| **Launch** | 8-10 | Primeros clientes + revenue ✅ |
+
+**TOTAL: 10 días** (vs 21 días con plan original)
+**AHORRO: 11 días = $366 ROI en tiempo**
 
 ### **Gemini Pro Integration** (GRATIS)
 ```typescript

@@ -389,7 +389,7 @@ function getChartButtons() {
 
 function getMainMenuMessage(userName: string): string {
   return `
-🚀 *Bienvenido Oliver!*
+🚀 *Bienvenido ${userName}!*
 
 Tu terminal de trading de oro está activo y listo para operar.
 
